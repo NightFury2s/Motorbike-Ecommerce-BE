@@ -12,19 +12,15 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class GmailService {
     private final JavaMailSender emailSender;
-
-    @Autowired
     public GmailService(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
-
     public SimpleMailMessage sendGmail(String subject, String body, String email) {
         SimpleMailMessage emailSetting = new SimpleMailMessage();
         emailSetting.setFrom("kcosten101@gmail.com");
         emailSetting.setTo(email);
         emailSetting.setSubject(subject);
         emailSetting.setText(body);
-
         emailSender.send(emailSetting);
         return emailSetting;
     }

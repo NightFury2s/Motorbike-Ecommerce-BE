@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<DAOUser, Long> {
 
     DAOUser findByUsername(String username);
+
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
@@ -24,7 +25,6 @@ public interface UserRepository extends CrudRepository<DAOUser, Long> {
 
     @Query("select (count(d) > 0) from DAOUser d where d.phoneNumber = ?1")
     boolean existsByPhoneNumber(String phoneNumber);
-
 
 
 }

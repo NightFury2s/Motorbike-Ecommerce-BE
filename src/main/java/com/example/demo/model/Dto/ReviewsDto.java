@@ -14,5 +14,4 @@ public class ReviewsDto {
     private Long id_user;
     private int rating;
     private String comment;
-  //  private String dateReview;
 }

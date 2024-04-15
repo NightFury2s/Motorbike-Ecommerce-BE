@@ -1,4 +1,5 @@
 package com.example.demo.repositories;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.example.demo.model.entity.Product;
@@ -11,30 +12,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByTypeProduct_NameTypeContainingIgnoreCase(String partialName);
 
-
-    //tìm theo idTypeProduct
-
+    //search by idTypeProduct
     Page<Product> findByTypeProduct_Id(Long id, Pageable pageable);
 
-    //tìm theo DetailType
+    //search by DetailType
     Page<Product> findByDetailType(Long detailType, Pageable pageable);
 
-    //tìm theo DetailType cao đến thấp
+    //Search by DetailsType high to low
     @Query("select p from Product p where p.detailType = ?1  ORDER BY p.price DESC")
-    Page<Product>  findByDetailTypeOrderByPriceDesc(Long detailType, Pageable pageable);
+    Page<Product> findByDetailTypeOrderByPriceDesc(Long detailType, Pageable pageable);
 
-    //tìm theo DetailType Thấp đến Cao
+    //Search by DetailType high to low
     @Query("select p from Product p where p.detailType = ?1  ORDER BY p.price ASC")
     Page<Product> findByDetailTypeOrderByPriceAsc(Long detailType, Pageable pageable);
 
-    //tìm theo TypeProduct_Id cao đến thấp
+    //search by TypeProduct_Id high đến low
     @Query("select p from Product p where p.typeProduct.id = ?1 ORDER BY p.price DESC")
     Page<Product> findByTypeProduct_IdOrderByPriceDesc(Long id, Pageable pageable);
 
-    //tìm theo TypeProduct_Id cao Thấp đến Cao
+    //search by TypeProduct_Id cao low đến high
     @Query("select p from Product p where p.typeProduct.id = ?1 ORDER BY p.price ASC")
     Page<Product> findByTypeProduct_IdOrderByPriceAsc(Long id, Pageable pageable);
 

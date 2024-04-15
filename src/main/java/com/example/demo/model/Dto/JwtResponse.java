@@ -17,8 +17,9 @@ public class JwtResponse implements Serializable {
     private static final long serialVersionUID = -8091879091924046844L;
     private final String token;
     private UserDTO userDTO;
+
     public JwtResponse(String token, DAOUser daoUser) {
         this.token = token;
-        userDTO =new UserDTO(daoUser);
+        userDTO = new UserDTO(daoUser);
     }
 }

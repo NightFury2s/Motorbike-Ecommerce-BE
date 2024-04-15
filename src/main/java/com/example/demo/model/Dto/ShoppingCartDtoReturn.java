@@ -10,20 +10,27 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class ShoppingCartDtoReturn {
+
     private long idCart;
     private Date paymentDate;
- //   private long totalPriceCart;
     private int status;
-    private List<ShoppingCartDetail> shoppingCartDetails = new ArrayList<>();
+    private double totalPrice;
+    private List<ProductSomeReponseDto> shoppingCartDetailsDto = new ArrayList<>();
 
-   public ShoppingCartDtoReturn(ShoppingCart shoppingCart){
-        this.idCart=shoppingCart.getId();
-        this.status=shoppingCart.getStatus();
-        this.shoppingCartDetails = shoppingCart.getShoppingCartDetails();
-        this.paymentDate=shoppingCart.getPaymentDate();
+    public ShoppingCartDtoReturn(ShoppingCart shoppingCart) {
+        this.idCart = shoppingCart.getId();
+        this.status = shoppingCart.getStatus();
+        this.paymentDate = shoppingCart.getPaymentDate();
+        this.shoppingCartDetailsDto = shoppingCart.getShoppingCartDetails().stream()
+                .map(detail -> new ProductSomeReponseDto(detail.getProduct()))
+                .collect(Collectors.toList());
+        this.totalPrice = shoppingCartDetailsDto.stream()
+                .mapToDouble(ProductSomeReponseDto::getNewPrice)
+                .sum();
     }
 }

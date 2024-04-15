@@ -8,7 +8,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class CommentDto {
-
     private String name;
     private String comment;
     private int rating;

@@ -153,11 +153,10 @@ public class ProductImpl implements ProductService {
                 .collect(Collectors.toList());
     }
     @Override
-
     public ResponseEntity<?> getDetail(Long idProduct) {
         try {
             Product productDB =productRepository.findById(idProduct).orElse(null);
-            if (productDB==null){
+            if (ObjectUtils.isEmpty(productDB)){
                 messenger.setMessenger("Sản phẩm không tồn tại.");
                 return new ResponseEntity<>(messenger, HttpStatus.OK);
             }

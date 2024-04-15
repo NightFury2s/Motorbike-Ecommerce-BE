@@ -17,20 +17,14 @@ public class ProductDetailDto {
 
     private Long id;
     private String name;
-
-    private float originalPrice ;
+    private float originalPrice;
     private float newPrice;
-
     private long quantity;
     private float Discount;
-
     //  1:Kawasaki2:Ducati 3:Honda4:Suziki    5:đầu nhớt  6:Phanh xe 7Gương 8Bánh xe
     private Long detailType;
-
     private TypeProduct typeProduct;
-
     private String describe;
-
     private List<Img> images = new ArrayList<>();
 
     public ProductDetailDto(Product product) {
@@ -45,7 +39,6 @@ public class ProductDetailDto {
         this.describe = product.getDescribe();
         this.images = product.getImages();
     }
-
     // Phương thức tính giá mới sau khi áp dụng giảm giá
     private float calculateNewPrice(float originalPrice, float discount) {
         return originalPrice * (1 - discount / 100);

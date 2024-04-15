@@ -64,7 +64,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 // chech sản phẩm đã ở trong giỏ hàng thì tăng số lượng
                 for (ShoppingCartDetail a : shoppingCartDetails) {
                     if (Objects.equals(a.getProduct().getId(), shoppingCartDto.getIdProduct())) {
-                        a.setQuantityCart(a.getQuantityCart() + shoppingCartDto.getQuantityInCart());
+                        a.setQuantityCart(a.getQuantityCart() + shoppingCartDto.getQuantityCart());
                         checkProductExists=true;
                         break;
                     }
@@ -73,7 +73,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                     // tạo 1 shoppingCartDetail
                     ShoppingCartDetail shoppingCartDetail = new ShoppingCartDetail();
                     // set số lượng mua sản phẩm từ fe
-                    shoppingCartDetail.setQuantityCart(shoppingCartDto.getQuantityInCart());
+                    shoppingCartDetail.setQuantityCart(shoppingCartDto.getQuantityCart());
                     //set time hiện tai
                     shoppingCartDetail.setDateCreated(new Date());
                     // set product từ id product  fe trả về
@@ -93,7 +93,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 // tạo 1 shoppingCartDetail
                 ShoppingCartDetail shoppingCartDetail = new ShoppingCartDetail();
                 // set số lượng mua sản phẩm từ fe
-                shoppingCartDetail.setQuantityCart(shoppingCartDto.getQuantityInCart());
+                shoppingCartDetail.setQuantityCart(shoppingCartDto.getQuantityCart());
                 //set time hiện tai
                 shoppingCartDetail.setDateCreated(new Date());
                 // set product từ id product  fe trả về

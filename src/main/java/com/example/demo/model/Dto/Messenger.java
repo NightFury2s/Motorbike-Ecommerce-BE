@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class Messenger {
-   private String messenger ;
+    private String messenger;
 }

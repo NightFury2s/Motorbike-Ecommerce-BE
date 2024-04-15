@@ -22,9 +22,8 @@ It makes use of the io.jsonwebtoken.Jwts for achieving this.
 
 @Component
 public class JwtTokenUtil implements Serializable {
-    
 
-    public static final long JWT_TOKEN_VALIDITY = 60*60;
+    private static final long JWT_TOKEN_VALIDITY = 60 * 60;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -56,18 +55,13 @@ public class JwtTokenUtil implements Serializable {
     }
 
     //generate token for user
-    public String generateToken(UserDetails userDetails, UserDTO userDTO){
+    public String generateToken(UserDetails userDetails, UserDTO userDTO) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id",userDTO.getId());
-        claims.put("role",userDTO.getRole());
+        claims.put("id", userDTO.getId());
+        claims.put("role", userDTO.getRole());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
-    //while creating the token -
-    //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-    //2. Sign the JWT using the HS512 algorithm and secret key.
-    //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
-    //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))

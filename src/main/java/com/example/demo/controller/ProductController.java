@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ProductController {
 
-
-  private final   ProductService productService;
-
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
 
     //@RequestParam("productImage") MultipartFile fileProductImage
     @PostMapping("/admin/productcar/add")
@@ -26,32 +23,30 @@ public class ProductController {
         return productService.add(productDto);
     }
 
-
-
-    // get theo idType
+    // get by idType
     @GetMapping("/productcar/getsome/{page}/{size}/{idType}")
     public ResponseEntity<?> getSomeProduct(@PathVariable int page, @PathVariable int size, @PathVariable Long idType) {
         return productService.getSome(page, size, idType);
     }
-
-    //get theo detailType sắp xếp theo giá
 
 
     @GetMapping("/productcar/getTypeDetail/{page}/{size}/{detailType}")
     public ResponseEntity<?> getTypeDetail(@PathVariable int page, @PathVariable int size, @PathVariable Long detailType) {
         return productService.getTypeDetail(page, size, detailType);
     }
-
+    //Get by details Sort by price
     @GetMapping("/productcar/getTypeDetail/{page}/{size}/{detailType}/{arrange}")
-    public ResponseEntity<?> getTypeDetailArrange(@PathVariable int page, @PathVariable int size, @PathVariable Long detailType,@PathVariable String arrange) {
-        return productService.getTypeDetailArrange(page, size, detailType,arrange );
+    public ResponseEntity<?> getTypeDetailArrange(@PathVariable int page, @PathVariable int size, @PathVariable Long detailType, @PathVariable String arrange) {
+        return productService.getTypeDetailArrange(page, size, detailType, arrange);
     }
-    //get theo detailType sắp xếp theo giá
+
+    //get by detailType Sort by price
     @GetMapping("/productcar/getsome/{page}/{size}/{typeProduct_Id}/{arrange}")
-    public ResponseEntity<?> getByTypeProductIdArrange(@PathVariable int page, @PathVariable int size, @PathVariable Long typeProduct_Id,@PathVariable String arrange) {
-        return productService.getByTypeProduct_IdArrange(page, size, typeProduct_Id,arrange );
+    public ResponseEntity<?> getByTypeProductIdArrange(@PathVariable int page, @PathVariable int size, @PathVariable Long typeProduct_Id, @PathVariable String arrange) {
+        return productService.getByTypeProduct_IdArrange(page, size, typeProduct_Id, arrange);
     }
-    //chi tiết sản phẩm
+
+    //product details
     @GetMapping("/product/getDetail/{idProduct}")
     public ResponseEntity<?> getProductDetail(@PathVariable Long idProduct) {
         return productService.getDetail(idProduct);
@@ -66,7 +61,4 @@ public class ProductController {
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody ProductDto productDto) {
         return productService.put(id, productDto);
     }
-
-
-
 }

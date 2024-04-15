@@ -10,9 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ShoppingCartRepository extends JpaRepository<ShoppingCart,Long> {
-
-
+public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 
     @Query("select s from ShoppingCart s where s.user.username = ?1")
     List<ShoppingCart> findByUser_Username(String username);
@@ -23,8 +21,7 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart,Long>
     @Query("select s from ShoppingCart s where s.user.username = ?1 and s.status = ?2")
     ShoppingCart findByUsernameAndStatus(String userName, int status);
 
-    @Query("select (count(s) > 0) from ShoppingCart s inner join s.shoppingCartDetails shoppingCartDetails " +
-            "where s.user.username = ?1 and shoppingCartDetails.id = ?2")
+    @Query("select (count(s) > 0) from ShoppingCart s inner join s.shoppingCartDetails shoppingCartDetails " + "where s.user.username = ?1 and shoppingCartDetails.id = ?2")
     boolean existsByUser_UsernameAndShoppingCartDetails_Id(String username, Long id);
 
     @Query("select (count(s) > 0) from ShoppingCart s where s.user.username = ?1")

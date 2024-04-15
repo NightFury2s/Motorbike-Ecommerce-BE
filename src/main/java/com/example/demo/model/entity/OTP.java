@@ -19,9 +19,9 @@ public class OTP {
     @Id
     private Long userId;
     private String otp;
-    private LocalDateTime expirationTime;
+    private Instant expirationTime;
 
-    public OTP(Long userId,String otp, LocalDateTime expirationTime ){
+    public OTP(Long userId,String otp, Instant expirationTime ){
         this.userId=userId;
         this.otp=otp;
         this.expirationTime=expirationTime;

@@ -7,16 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+@RequestMapping("user/shoppingCart")
 @Controller
 public class ShoppingCartController {
-   // @Autowired
+    // @Autowired
     private final ShoppingCartService shoppingCartService;
 
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
     }
-    @PostMapping("/add")
+
+    @PostMapping("/addToCart")
     public ResponseEntity<?> addTypeProduct(@RequestBody ShoppingCartDto shoppingCartDto) {
         return shoppingCartService.addCart(shoppingCartDto);
     }
@@ -26,7 +27,8 @@ public class ShoppingCartController {
         return shoppingCartService.getAll();
     }
 
-    @GetMapping("user/shoppingCart/getCartByUser")
+    @PostMapping
+            ("/getCartByUser")
     public ResponseEntity<?> getCartByUser() {
         return shoppingCartService.getCartByUser();
     }

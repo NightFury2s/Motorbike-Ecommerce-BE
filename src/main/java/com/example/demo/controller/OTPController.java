@@ -13,8 +13,7 @@ import javax.mail.MessagingException;
 @RequestMapping("/otp")
 public class OTPController {
 
-   private final OTPService otpService;
-
+    private final OTPService otpService;
 
     public OTPController(OTPService otpService) {
         this.otpService = otpService;
@@ -25,9 +24,9 @@ public class OTPController {
         return otpService.sendOTP(email);
     }
 
-    @PostMapping("/resetPassword")
-    public ResponseEntity<?> resetPass(@RequestParam("email") String email, @RequestParam("otp") String otp) {
-        return otpService.resetPassword(email,otp);
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPass(@RequestParam("email") String email, @RequestParam("otp") String otp) throws MessagingException {
+        return otpService.resetPassword(email, otp);
     }
 }
 

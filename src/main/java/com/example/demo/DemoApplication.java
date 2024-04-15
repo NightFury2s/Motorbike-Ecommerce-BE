@@ -34,9 +34,11 @@ public class DemoApplication {
     UserRepository userRepository;
     @Autowired
     static GmailService gmailService;
+
     public static void main(String[] args) {
-      SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
+
     //thêm dữ liệu test
     //thêm 1 lần r tắt
     @EventListener(ApplicationReadyEvent.class)
@@ -57,8 +59,8 @@ public class DemoApplication {
 //        System.out.println("Đã thêm type product ");
     }
 
-    void addUserAdmin(){
-        DAOUser user= new DAOUser();
+    void addUserAdmin() {
+        DAOUser user = new DAOUser();
         user.setUsername("test");
         user.setPassword(bcryptEncoder.encode("test"));
         user.setEmail("kcosten1011@gmail.com");
@@ -73,8 +75,9 @@ public class DemoApplication {
         typeProduct.setNameType(type);
         typeProductRepository.save(typeProduct);
     }
-    private void AddRole(String role){
-        Role addRole =new Role();
+
+    private void AddRole(String role) {
+        Role addRole = new Role();
         addRole.setRole(role);
         roleRepository.save(addRole);
     }

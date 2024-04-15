@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
 @Slf4j
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -38,7 +39,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private final RoleRepository roleRepository;
 
     @Autowired
-    private  PasswordEncoder bcryptEncoder;
+    private PasswordEncoder bcryptEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -81,14 +82,15 @@ public class JwtUserDetailsService implements UserDetailsService {
         return new UserDTO(userRepository.findByUsername(username));
     }
 
-    private boolean  isInfo(UserRequestDto userRequestDto){
-       return CheckEmptys.checkEmpty(userRequestDto.getUsername())
-                ||  CheckEmptys.checkEmpty(userRequestDto.getPassword())
+    private boolean isInfo(UserRequestDto userRequestDto) {
+        return CheckEmptys.checkEmpty(userRequestDto.getUsername())
+                || CheckEmptys.checkEmpty(userRequestDto.getPassword())
                 || CheckEmptys.checkEmpty(userRequestDto.getAddress())
                 || CheckEmptys.checkEmpty(userRequestDto.getPhoneNumber())
                 || CheckEmptys.checkEmpty(userRequestDto.getEmail())
                 || CheckEmptys.checkEmpty(userRequestDto.getFullName());
     }
+
     //kiểm tra điều kiện
     private ResponseEntity<?> validateRegisterInfo(UserRequestDto userRequestDto) {
         //check thông tin người dùng có để trống không
@@ -100,10 +102,6 @@ public class JwtUserDetailsService implements UserDetailsService {
             messenger.setMessenger("Tên đầy đủ phải ít nhất 6 kí tự");
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
-//        if (!userRequestDto.getFullName().matches("^[a-zA-Z]*$")) {
-//            messenger.setMessenger("Tên đầy đủ không được chứa ký tự đặc biệt hoặc số");
-//            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
-//        }
         if (userRepository.existsByEmail(userRequestDto.getEmail())) {
             messenger.setMessenger("Email đã tồn tại");
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
@@ -139,18 +137,9 @@ public class JwtUserDetailsService implements UserDetailsService {
             messenger.setMessenger(" Mật khẩu bắt buộc gồm số, chữ cái thường, chữ cái hoa, ký tự đặc biệt");
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
-
-
-
-      /*  if (!userRequestDto.getPhoneNumber().matches("^0[0-9]{9}$"))  {
-            messenger.setMessenger("Số điện thoại không hợp lệ");
-            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
-        }*/
-
-
-
         return null;
     }
+
     //dang ki
     public ResponseEntity<?> save(UserRequestDto userRequestDto) {
 
@@ -184,13 +173,12 @@ public class JwtUserDetailsService implements UserDetailsService {
             messenger.setMessenger("Đã xãy ra lỗi khi thêm tài khoản.))");
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
-
-
     }
+
     // hàm check tk mk
     private ResponseEntity<?> validateLoginInfo(JwtRequest authenticationRequest) {
-        if (CheckEmptys.checkEmpty( authenticationRequest.getUsername())
-                && CheckEmptys.checkEmpty( authenticationRequest.getPassword())) {
+        if (CheckEmptys.checkEmpty(authenticationRequest.getUsername())
+                && CheckEmptys.checkEmpty(authenticationRequest.getPassword())) {
             messenger.setMessenger("Vui lòng nhập tài khoản và mật khẩu");
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
@@ -234,12 +222,12 @@ public class JwtUserDetailsService implements UserDetailsService {
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
     }
+
     // xác thuực người dùng
     private void authenticate(String username, String password) throws Exception {
         try {
-            Authentication authentication=  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-           // găắn token chứa tt vào SecurityContextHolder
-
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            // găắn token chứa tt vào SecurityContextHolder
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);

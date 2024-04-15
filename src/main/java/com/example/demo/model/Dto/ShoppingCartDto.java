@@ -12,5 +12,5 @@ import java.util.List;
 @Setter
 public class ShoppingCartDto {
     private Long idProduct;
-    private int quantityInCart;
+    private int quantityCart;
 }

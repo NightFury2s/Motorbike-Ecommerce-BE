@@ -18,7 +18,6 @@
     public class Img {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-
         private Long idImg;
         //@Lob
         @Type(type = "text")
