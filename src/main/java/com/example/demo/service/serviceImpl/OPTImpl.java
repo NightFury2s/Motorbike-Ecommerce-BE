@@ -82,19 +82,20 @@ public class OPTImpl implements OTPService {
     }
 
     private String generateOTPContent(String fullName, String otp) {
-        String emailContent = "<html><body style='font-family: Arial, sans-serif;'>";
-        emailContent += "<h2 style='color: #333333;'>Kính gửi quý khách " + fullName + ",</h2>";
-        emailContent += "<p style='color: #333333;'>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ phía quý khách. Dưới đây là mã OTP của bạn:</p>";
-        emailContent += "<p style='color: #333333;'><strong>Mã OTP của bạn là:</strong> " + otp + "</p>";
-        emailContent += "<p style='color: #333333;'>Đừng ngần ngại liên hệ với chúng tôi nếu quý khách có bất kỳ thắc mắc nào.</p>";
-        emailContent += "<p style='color: #333333;'>Trân trọng,<br>";
-        emailContent += "Motorbike Ecommerce</p>";
-        emailContent += "<p style='color: #333333;'>Địa chỉ: Đại Lộ Khoa Học, TP. Quy Nhơn<br>";
-        emailContent += "Email: motobikes@gmail.com<br>";
-        emailContent += "Số điện thoại: 0123456789<br>";
-        emailContent += "Giờ làm việc: 08:00 AM - 17:30 PM</p>";
-        emailContent += "</body></html>";
-        return emailContent;
+        StringBuilder emailContentBuilder = new StringBuilder();
+        emailContentBuilder.append("<html><body style='font-family: Arial, sans-serif;'>");
+        emailContentBuilder.append("<h2 style='color: #333333;'>Kính gửi quý khách ").append(fullName).append(",</h2>");
+        emailContentBuilder.append("<p style='color: #333333;'>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ phía quý khách. Dưới đây là mã OTP của bạn:</p>");
+        emailContentBuilder.append("<p style='color: #333333;'><strong>Mã OTP của bạn là:</strong> ").append(otp).append("</p>");
+        emailContentBuilder.append("<p style='color: #333333;'>Đừng ngần ngại liên hệ với chúng tôi nếu quý khách có bất kỳ thắc mắc nào.</p>");
+        emailContentBuilder.append("<p style='color: #333333;'>Trân trọng,<br>");
+        emailContentBuilder.append("Motorbike Ecommerce</p>");
+        emailContentBuilder.append("<p style='color: #333333;'>Địa chỉ: Đại Lộ Khoa Học, TP. Quy Nhơn<br>");
+        emailContentBuilder.append("Email: motobikes@gmail.com<br>");
+        emailContentBuilder.append("Số điện thoại: 0123456789<br>");
+        emailContentBuilder.append("Giờ làm việc: 08:00 AM - 17:30 PM</p>");
+        emailContentBuilder.append("</body></html>");
+        return emailContentBuilder.toString();
     }
 
     /// check otp
@@ -112,9 +113,7 @@ public class OPTImpl implements OTPService {
     @Override
     public ResponseEntity<?> resetPassword(String email, String otp) {
         try {
-            System.out.println(otp);
             DAOUser user = userRepository.findByEmail(email.trim()).orElse(null);
-//
             if (ObjectUtils.isEmpty(user)) {
                 messenger.setMessenger("Email không tồn tại, vui lòng kiểm tra lại. ");
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
@@ -151,6 +150,20 @@ public class OPTImpl implements OTPService {
     }
 
     private String generateResetPasswordEmailContent(String fullName, String passwordReset) {
-        return "<html><body style='font-family: Arial, sans-serif;'>" + "<h2 style='color: #333333;'>Kính gửi quý khách " + fullName + ",</h2>" + "<p style='color: #333333;'>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ phía quý khách. Dưới đây là mật khẩu mới của bạn:</p>" + "<p style='color: #333333;'><strong>Mật khẩu mới:</strong> " + passwordReset + "</p>" + "<p style='color: #333333;'>Đừng ngần ngại liên hệ với chúng tôi nếu quý khách có bất kỳ thắc mắc nào.</p>" + "<p style='color: #333333;'>Trân trọng,<br>" + "Motorbike Ecommerce</p>" + "<p style='color: #333333;'>Địa chỉ: Đại Lộ Khoa Học, TP. Quy Nhơn<br>" + "Email: motobikes@gmail.com<br>" + "Số điện thoại: 0123456789<br>" + "Giờ làm việc: 08:00 AM - 17:30 PM</p>" + "</body></html>";
+        StringBuilder emailContentBuilder = new StringBuilder();
+        emailContentBuilder.append("<html><body style='font-family: Arial, sans-serif;'>")
+                .append("<h2 style='color: #333333;'>Kính gửi quý khách ").append(fullName).append(",</h2>")
+                .append("<p style='color: #333333;'>Chúng tôi nhận được yêu cầu đặt lại mật khẩu từ phía quý khách. Dưới đây là mật khẩu mới của bạn:</p>")
+                .append("<p style='color: #333333;'><strong>Mật khẩu mới:</strong> ").append(passwordReset).append("</p>")
+                .append("<p style='color: #333333;'>Đừng ngần ngại liên hệ với chúng tôi nếu quý khách có bất kỳ thắc mắc nào.</p>")
+                .append("<p style='color: #333333;'>Trân trọng,<br>")
+                .append("Motorbike Ecommerce</p>")
+                .append("<p style='color: #333333;'>Địa chỉ: Đại Lộ Khoa Học, TP. Quy Nhơn<br>")
+                .append("Email: motobikes@gmail.com<br>")
+                .append("Số điện thoại: 0123456789<br>")
+                .append("Giờ làm việc: 08:00 AM - 17:30 PM</p>")
+                .append("</body></html>");
+        return emailContentBuilder.toString();
     }
+
 }

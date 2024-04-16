@@ -8,4 +8,5 @@ public interface ShoppingCartService {
     ResponseEntity<?> getAll();
     ResponseEntity<?> delteteByIdShoppingCartDetail(Long id);
     ResponseEntity<?> getCartByUser();
+
 }

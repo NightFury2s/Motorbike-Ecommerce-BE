@@ -8,9 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user/shoppingCart")
-@Controller
+@RestController
 public class ShoppingCartController {
-    // @Autowired
     private final ShoppingCartService shoppingCartService;
 
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
@@ -27,8 +26,7 @@ public class ShoppingCartController {
         return shoppingCartService.getAll();
     }
 
-    @PostMapping
-            ("/getCartByUser")
+    @PostMapping("/getCartByUser")
     public ResponseEntity<?> getCartByUser() {
         return shoppingCartService.getCartByUser();
     }

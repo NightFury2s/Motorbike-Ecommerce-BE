@@ -20,16 +20,20 @@ public class ShoppingCartDtoReturn {
     private Date paymentDate;
     private int status;
     private double totalPrice;
-    private List<ProductSomeReponseDto> shoppingCartDetailsDto = new ArrayList<>();
+
+    private List<ShoppingCartDetailDto> shoppingCartDetailsDto = new ArrayList<>();
 
     public ShoppingCartDtoReturn(ShoppingCart shoppingCart) {
         this.idCart = shoppingCart.getId();
         this.status = shoppingCart.getStatus();
         this.paymentDate = shoppingCart.getPaymentDate();
-        this.shoppingCartDetailsDto = shoppingCart.getShoppingCartDetails().stream()
-                .map(detail -> new ProductSomeReponseDto(detail.getProduct()))
+
+        this.shoppingCartDetailsDto =shoppingCart.getShoppingCartDetails().stream()
+                .map(ShoppingCartDetailDto::new)
                 .collect(Collectors.toList());
-        this.totalPrice = shoppingCartDetailsDto.stream()
+
+        this.totalPrice =  shoppingCart.getShoppingCartDetails().stream()
+                .map(detail -> new ProductSomeReponseDto(detail.getProduct()))
                 .mapToDouble(ProductSomeReponseDto::getNewPrice)
                 .sum();
     }

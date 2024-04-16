@@ -114,17 +114,13 @@ public class ShoppingCartImpl implements ShoppingCartService {
         }
     }
 
-
     @Override
     public ResponseEntity<?> getAll() {
-//        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAll();
-//        List<ShoppingCartDtoReturn> shoppingCartDtoReturns1 = new ArrayList<>();
-//
-//        List<ShoppingCartDtoReturn> shoppingCartDtoReturns = shoppingCarts.stream()
-//                .map(ShoppingCartDtoReturn::new)
-//                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAll();
+        List<ShoppingCartDtoReturn> shoppingCartDtoReturns = shoppingCarts.stream()
+                .map(ShoppingCartDtoReturn::new)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
 
     }
 
@@ -149,4 +145,6 @@ public class ShoppingCartImpl implements ShoppingCartService {
         messenger.setMessenger("Chữa có gì trong giỏ hàng");
         return new ResponseEntity<>(messenger, HttpStatus.NO_CONTENT);
     }
+
+
 }
