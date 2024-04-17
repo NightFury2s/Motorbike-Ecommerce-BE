@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Dto.ShoppingCartDto;
 import com.example.demo.service.ShoppingCartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user/shoppingCart")
@@ -19,6 +17,10 @@ public class ShoppingCartController {
     @PostMapping("/addToCart")
     public ResponseEntity<?> addTypeProduct(@RequestBody ShoppingCartDto shoppingCartDto) {
         return shoppingCartService.addCart(shoppingCartDto);
+    }
+    @PostMapping("/payment")
+    public ResponseEntity<?>  payment() {
+        return shoppingCartService. payment();
     }
 
     @GetMapping("/getall")

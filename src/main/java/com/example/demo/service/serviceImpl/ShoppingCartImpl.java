@@ -1,27 +1,24 @@
 package com.example.demo.service.serviceImpl;
 
-import ch.qos.logback.classic.pattern.Util;
+
 import com.example.demo.Util.GetInfoUser;
 import com.example.demo.model.Dto.Messenger;
 import com.example.demo.model.Dto.ShoppingCartDto;
 import com.example.demo.model.Dto.ShoppingCartDtoReturn;
+import com.example.demo.model.entity.Product;
 import com.example.demo.model.entity.ShoppingCart;
 import com.example.demo.model.entity.ShoppingCartDetail;
 import com.example.demo.repositories.*;
 import com.example.demo.service.ShoppingCartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.stream.Stream;
 
 @Service
 public class ShoppingCartImpl implements ShoppingCartService {
@@ -47,6 +44,40 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
+    public ResponseEntity<?> payment() {
+
+        if (shoppingCartRepository.existsByUser_UsernameAndStatus(GetInfoUser.getUsername(), 0)) {
+            // update ShoppingCart with status =1
+            ShoppingCart shoppingCartNew = shoppingCartRepository.findByUsernameAndStatus(GetInfoUser.getUsername(), 0);
+            shoppingCartNew.setStatus(1);
+
+            //Trừ số lượng ở kho
+            for (ShoppingCartDetail a:shoppingCartNew.getShoppingCartDetails()){
+                Product product = productRepository.findById(a.getProduct().getId()).orElse(null);
+                assert product != null;
+                product.setQuantity(product.getQuantity()-a.getQuantityCart());
+
+                productRepository.save(product);
+            }
+
+            shoppingCartRepository.save(shoppingCartNew);
+
+            messenger.setMessenger("Đặt hàng thành công. ");
+            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
+        }
+        else
+        {
+            messenger.setMessenger("Giỏ hàng rỗng.");
+            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> putCart(ShoppingCartDto shoppingCartDto) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<?> addCart(ShoppingCartDto shoppingCartDto) {
         try {
             // tạo 1 ShoppingCart để lưu vào db
@@ -60,16 +91,28 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
                 List<ShoppingCartDetail> shoppingCartDetails = shoppingCartNew.getShoppingCartDetails();
 
-                boolean checkProductExists=false;
-                // chech sản phẩm đã ở trong giỏ hàng thì tăng số lượng
-                for (ShoppingCartDetail a : shoppingCartDetails) {
-                    if (Objects.equals(a.getProduct().getId(), shoppingCartDto.getIdProduct())) {
-                        a.setQuantityCart(a.getQuantityCart() + shoppingCartDto.getQuantityCart());
-                        checkProductExists=true;
-                        break;
+                // Tạo một biến để kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+                boolean productExists = false;
+
+                // Duyệt qua danh sách shoppingCartDetails
+                for (ShoppingCartDetail cartDetail : shoppingCartDetails) {
+                    // Kiểm tra xem sản phẩm trong chi tiết giỏ hàng có cùng id với sản phẩm cần thêm vào giỏ hàng không
+                    if (Objects.equals(cartDetail.getProduct().getId(), shoppingCartDto.getIdProduct())) {
+                        // Kiểm tra xem số lượng trong kho có đủ để thêm vào giỏ hàng không
+                        long availableQuantity = cartDetail.getProduct().getQuantity();
+                        long requestedQuantity = cartDetail.getQuantityCart() + shoppingCartDto.getQuantityCart();
+                        if (availableQuantity < requestedQuantity) {
+                            messenger.setMessenger("Số lượng đã đến giới hạn. ");
+                            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
+                        }
+
+                        // Cập nhật số lượng trong giỏ hàng
+                        cartDetail.setQuantityCart(requestedQuantity);
+                        productExists = true;
+                        break; // Kết thúc vòng lặp vì đã tìm thấy sản phẩm trong giỏ hàng
                     }
                 }
-                if(!checkProductExists) {
+                if(!productExists) {
                     // tạo 1 shoppingCartDetail
                     ShoppingCartDetail shoppingCartDetail = new ShoppingCartDetail();
                     // set số lượng mua sản phẩm từ fe
@@ -85,6 +128,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 shoppingCartNew.setShoppingCartDetails(shoppingCartDetails);
 
             } else {
+
                 shoppingCartNew.setPaymentDate(new Date());
                 //Status =0 ;dang nằm trong giỏ hàng của User
                 shoppingCartNew.setStatus(0);
@@ -106,8 +150,8 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 shoppingCartNew.setShoppingCartDetails(shoppingCartDetails);
             }
             shoppingCartRepository.save(shoppingCartNew);
-            messenger.setMessenger("Add to cart successfully");
-            return new ResponseEntity<>(shoppingCartNew, HttpStatus.OK);
+            messenger.setMessenger("Thêm thành công");
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
         } catch (Exception e) {
             messenger.setMessenger("error");
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
@@ -137,13 +181,20 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
     @Override
     public ResponseEntity<?> getCartByUser() {
-        if(shoppingCartRepository.existsByUser_Username(GetInfoUser.getUsername())) {
-            ShoppingCart shoppingCarts = shoppingCartRepository.findByUsernameAndStatus(GetInfoUser.getUsername(), 0);
-            ShoppingCartDtoReturn shoppingCartDtoReturns = new ShoppingCartDtoReturn(shoppingCarts);
-            return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
+        try{
+            if(shoppingCartRepository.existsByUser_UsernameAndStatus(GetInfoUser.getUsername(),0)) {
+                ShoppingCart shoppingCarts = shoppingCartRepository.findByUsernameAndStatus(GetInfoUser.getUsername(), 0);
+                ShoppingCartDtoReturn shoppingCartDtoReturns = new ShoppingCartDtoReturn(shoppingCarts);
+                return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
+            }
+            messenger.setMessenger("Chưa có gì trong giỏ hàng");
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
         }
-        messenger.setMessenger("Chữa có gì trong giỏ hàng");
-        return new ResponseEntity<>(messenger, HttpStatus.NO_CONTENT);
+        catch (Exception e){
+            messenger.setMessenger("Đã xảy ra lỗi");
+            return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

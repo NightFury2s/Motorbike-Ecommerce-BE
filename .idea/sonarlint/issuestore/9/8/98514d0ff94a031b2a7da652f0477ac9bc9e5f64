@@ -1,0 +1,25 @@
+
+‡	java:S112é"FDefine and throw a dedicated exception instead of using a generic one.(êÆÖËùÿÿÿÿJ$6e935bef-a50a-4f79-a834-fa196dee5e1d
+‚	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(ÈçïÕJ$b8e1302b-6a2d-49ed-8a21-ac6a113398de
+‰	java:S112ã"FDefine and throw a dedicated exception instead of using a generic one.(Â††‘8¾îÑî1J$e7567bd1-8be2-4543-a459-a8099385f4f3
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Œ›Û»J$5e631c57-3890-4694-bca3-28feb6a73e46
+~
+java:S6813)"BRemove this field injection and use constructor injection instead.(êæÄŞJ$3f475318-3ca3-4471-8d2d-35af96c1fe39
+~
+java:S6813,"BRemove this field injection and use constructor injection instead.(êæÄŞJ$785d61b6-31a9-4bfd-a6e9-b46869f848b0
+~
+java:S6813/"BRemove this field injection and use constructor injection instead.(êæÄŞJ$3860753b-c16d-4c29-aebb-fda0f80735f0
+~
+java:S68132"BRemove this field injection and use constructor injection instead.(êæÄŞJ$c11fd651-ba4f-424c-b9b9-c0cac95fb10b
+
+java:S5998m"LRefactor this repetition that can lead to a stack overflow for large inputs.(âøªøÿÿÿÿJ$0dc801eb-d37b-461b-a621-5f6f0033403d
+„
+java:S6353m"CUse concise character class syntax '\\w' instead of '[a-zA-Z0-9_]'.(âøªøÿÿÿÿJ$d7816cba-46ea-40b1-8cb6-89da5de2bb02
+„
+java:S6353m"CUse concise character class syntax '\\w' instead of '[a-zA-Z0-9_]'.(âøªøÿÿÿÿJ$34ee1253-b0b6-453b-ab57-57464ccd9bb5
+~
+java:S6353ˆ"<Use concise character class syntax '\\d' instead of '[0-9]'.(‰æÒüÿÿÿÿJ$91ba5c6f-313f-47a2-9130-e8c60cf5638d
+h
+java:S1452"&Remove usage of generic wildcard type.(’æ¹²ùÿÿÿÿJ$47e4751a-316a-447d-ae64-15ed65ee81c9
+h
+java:S1452Ç"&Remove usage of generic wildcard type.(ŸÉáöüÿÿÿÿJ$03fd0f63-36d2-4649-8669-c7ab66f64df1

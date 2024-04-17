@@ -198,7 +198,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     //login
     public ResponseEntity<?> login(JwtRequest authenticationRequest) throws Exception {
         try {
-            //check username password có hợp lệ không
+            //check username password
             ResponseEntity<?> validationResponse = validateLoginInfo(authenticationRequest);
             if (validationResponse != null) {
                 return validationResponse;

@@ -1,3 +1,13 @@
+DELETE http://localhost:8080/admin/productcar/delete-multiple-products
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-17T091430.401.json
+
+###
+
 POST http://localhost:8080/add
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
 Accept-Encoding: br, deflate, gzip, x-gzip

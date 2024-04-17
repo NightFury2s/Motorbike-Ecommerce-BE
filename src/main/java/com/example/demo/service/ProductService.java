@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.Dto.ProductDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface ProductService {
     ResponseEntity<?> add(ProductDto dto);
     ResponseEntity<?> getAll(int page, int size);
@@ -16,5 +18,6 @@ public interface ProductService {
     ResponseEntity<?> getByTypeProduct_IdArrange(int page, int size,Long typeProduct_Id,String arrange);
 
     ResponseEntity<?> delete(long id);
+    ResponseEntity<?> deleteMultipleProducts(List<Long> ids);
     ResponseEntity<?> put(long id,ProductDto productDto);
 }
