@@ -23,7 +23,8 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
     @Query("select (count(s) > 0) from ShoppingCart s inner join s.shoppingCartDetails shoppingCartDetails " + "where s.user.username = ?1 and shoppingCartDetails.id = ?2")
     boolean existsByUser_UsernameAndShoppingCartDetails_Id(String username, Long id);
 
-
+    @Query("select s from ShoppingCart s inner join s.shoppingCartDetails shoppingCartDetails " + "where s.user.username = ?1 and shoppingCartDetails.id = ?2")
+    ShoppingCart findByUser_UsernameAndShoppingCartDetails_Id(String username, Long id);
 
     @Query("select s from ShoppingCart s where s.user.username = ?1 and s.status = ?2")
     Optional<ShoppingCart> findByUser_UsernameAndStatus(String username, int status);

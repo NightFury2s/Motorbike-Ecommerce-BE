@@ -9,7 +9,6 @@ import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.ReviewsRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.ReviewsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class ReviewsImpl implements ReviewsService {
     public ResponseEntity<?> add(ReviewsDto reviewsDto) {
 
         try {
-            if(reviewsDto.getRating()>5||reviewsDto.getRating()<1){
+            if (reviewsDto.getRating() > 5 || reviewsDto.getRating() < 1) {
                 messenger.setMessenger("Đánh giá từ 1 đến 5 sao");
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }

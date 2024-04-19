@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 @Service
 public class ProductImpl implements ProductService {
 
@@ -117,7 +119,6 @@ public class ProductImpl implements ProductService {
             log.error("Error while getting partial product list: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        //  return null;
     }
 
     @Override
@@ -149,9 +150,7 @@ public class ProductImpl implements ProductService {
     }
 
     private static List<ProductSomeReponseDto> getProductSomePageResponseDTO(Page<Product> productsPage) {
-        return productsPage.stream()
-                .map(ProductSomeReponseDto::new)
-                .collect(Collectors.toList());
+        return productsPage.stream().map(ProductSomeReponseDto::new).collect(Collectors.toList());
     }
 
     @Override
@@ -278,8 +277,7 @@ public class ProductImpl implements ProductService {
                     productRepository.deleteById(id);
                     log.info("Deleted product successfully: {}", id);
                     message.append("Deleted product successfully: ").append(id).append("\n");
-                }
-                else {
+                } else {
                     log.error("Failed to delete product: Product with id {} not found", id);
                     message.append("Failed to delete product: Product with id ").append(id).append(" not found\n");
                 }
@@ -311,7 +309,7 @@ public class ProductImpl implements ProductService {
             List<Img> img = productDto.getImages();
 
             //img.add()
-            product.setImages(img );
+            product.setImages(img);
 
             product.setDiscount(productDto.getDiscount());
             product.setDescribe(productDto.getDescribe());

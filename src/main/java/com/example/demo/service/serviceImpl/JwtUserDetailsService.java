@@ -149,7 +149,6 @@ public class JwtUserDetailsService implements UserDetailsService {
             if (validationResponse != null) {
                 return validationResponse;
             }
-
             //tạo 1 User để luu vào csdl
             DAOUser daoUser = new DAOUser();
             // gán thông tin cho user lấy từ dto

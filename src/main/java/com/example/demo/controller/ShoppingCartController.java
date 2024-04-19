@@ -18,14 +18,20 @@ public class ShoppingCartController {
     public ResponseEntity<?> addTypeProduct(@RequestBody ShoppingCartDto shoppingCartDto) {
         return shoppingCartService.addCart(shoppingCartDto);
     }
+
+    @PutMapping("/update-Cart")
+    public ResponseEntity<?> updateCart(@RequestParam("idCartDetail") long idCartDetail, @RequestParam("quantityCart") int quantityCart) {
+        return shoppingCartService.updateCart(idCartDetail, quantityCart);
+    }
+
     @PostMapping("/payment")
-    public ResponseEntity<?>  payment() {
-        return shoppingCartService. payment();
+    public ResponseEntity<?> payment() {
+        return shoppingCartService.paymentCart();
     }
 
     @GetMapping("/getall")
     public ResponseEntity<?> getAll() {
-        return shoppingCartService.getAll();
+        return shoppingCartService.getAllCard();
     }
 
     @PostMapping("/getCartByUser")
@@ -34,8 +40,8 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delteteByIdShoppingCartDetail(@RequestParam("id") long id) {
-        return shoppingCartService.delteteByIdShoppingCartDetail(id);
+    public ResponseEntity<?> deleteByIdShoppingCartDetail(@RequestParam("id") long id) {
+        return shoppingCartService.deleteByIdShoppingCartDetail(id);
     }
 
 
