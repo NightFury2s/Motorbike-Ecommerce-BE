@@ -5,21 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="534f43b9-044d-4b4c-b196-932716482ed7" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Util/Mess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/8/18def1fc019d03a742b3f801cf6e572772c59a26" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/8/18def1fc019d03a742b3f801cf6e572772c59a26" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/a/1a7d08a3c4ef4df5a674dda261de8a4ee79e45f8" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/a/1a7d08a3c4ef4df5a674dda261de8a4ee79e45f8" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/26aace836e3b32650d18bd3f9618abc596a13159" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/26aace836e3b32650d18bd3f9618abc596a13159" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/7/47a41374fc36ac5560307015f905890ae7c266f9" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/7/47a41374fc36ac5560307015f905890ae7c266f9" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6bed6b889dfcd0bdbfe57ffd09cbe63d52a54a52" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/b/6bed6b889dfcd0bdbfe57ffd09cbe63d52a54a52" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/5/750cedccd56c2959b1bfc1100a957f8b6db73fc0" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/5/750cedccd56c2959b1bfc1100a957f8b6db73fc0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/f/8ff632321734a26a46511a7ba6442b3f8a6926a1" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/f/8ff632321734a26a46511a7ba6442b3f8a6926a1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/2/92e1947b55b46b468d9a40a5bcc45cddeb1e0425" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/2/92e1947b55b46b468d9a40a5bcc45cddeb1e0425" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/98514d0ff94a031b2a7da652f0477ac9bc9e5f64" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/98514d0ff94a031b2a7da652f0477ac9bc9e5f64" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/9899dacb11d2186d5a6c48f2fc46e959797137fc" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/8/9899dacb11d2186d5a6c48f2fc46e959797137fc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/4/b4c5ec99bf58ef036892021977a1f7052147200c" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/4/b4c5ec99bf58ef036892021977a1f7052147200c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/1/c186b955183fb62364398933a2cae9f630ae7d26" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/1/c186b955183fb62364398933a2cae9f630ae7d26" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/0/d0a9494be004caf3700953b03b80c5aa331f5e49" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/0/d0a9494be004caf3700953b03b80c5aa331f5e49" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/8/d8b3dc739e80f9d9d31fe93b790b594184c5e66d" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/8/d8b3dc739e80f9d9d31fe93b790b594184c5e66d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/6/e68dd8588711b1b40b98175bddadbed3e8656c57" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/6/e68dd8588711b1b40b98175bddadbed3e8656c57" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/8/e8d5f0908edf108144ffe42b776ff2986a098504" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/8/e8d5f0908edf108144ffe42b776ff2986a098504" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/7/f798a3c433501fe8d386c09d2c8e243f9747a7be" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/7/f798a3c433501fe8d386c09d2c8e243f9747a7be" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/8/f8ada7f4963320cd1d03c7950273727071eb45c3" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/8/f8ada7f4963320cd1d03c7950273727071eb45c3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/9/f9390af88ddaadbe5b3cc58308fd56adea2afb76" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/9/f9390af88ddaadbe5b3cc58308fd56adea2afb76" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/config/OpenAPIConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/config/OpenAPIConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/config/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/ShoppingCartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/controller/ShoppingCartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Dto/ShoppingCartDtoReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/model/Dto/ShoppingCartDtoReturn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/repositories/ShoppingCartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/repositories/ShoppingCartRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/ShoppingCartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/ShoppingCartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/JwtUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/JwtUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/OPTImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/OPTImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ProductImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ProductImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ReviewsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ReviewsImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ShoppingCartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ShoppingCartImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/config/WebSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/config/WebSecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/controller/OTPController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/controller/OTPController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/controller/ShoppingCartController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/controller/ShoppingCartController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/model/Dto/ShoppingCartDtoReturn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/model/Dto/ShoppingCartDtoReturn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/repositories/ShoppingCartRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/repositories/ShoppingCartRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/JwtUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/JwtUserDetailsService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/OPTImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/OPTImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/ProductImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/ProductImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/ShoppingCartImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/service/serviceImpl/ShoppingCartImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,17 +67,24 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NightFury2s/Motorbike-Ecommerce-BE&quot;,
+    &quot;accountId&quot;: &quot;84ef7f6f-5a59-4333-839d-e20dd1fc889f&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;NightFury2s&quot;,
+    &quot;repository&quot;: &quot;Motorbike-Ecommerce-BE&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="5b14e13f-afd3-48f2-bea1-147001f71b19" />
-        <option name="url" value="https://github.com/minhduy555555/motorecommerce.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -78,6 +106,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.DemoApplication.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.All in generated-requests.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #3.executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -86,7 +115,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.DemoApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Motorbike-Ecommerce-BE&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#2 on motorbike-ecommerce-be-create-api…-cart&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/kcost/OneDrive/Máy tính/CGDN-SpringBoot-JWT-MySql-master/src/test/java&quot;,
@@ -127,6 +156,9 @@
     <configuration name="All in generated-requests" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http">
       <method v="2" />
     </configuration>
+    <configuration name="generated-requests | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="DemoApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="demo" />
       <extension name="coverage">
@@ -152,12 +184,14 @@
     </configuration>
     <list>
       <item itemvalue="Application.DemoApplication" />
+      <item itemvalue="HTTP Request.generated-requests | #3" />
       <item itemvalue="HTTP Request.All in generated-requests" />
       <item itemvalue="JUnit.DemoApplicationTests.contextLoads" />
       <item itemvalue="Spring Boot.DemoApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.generated-requests | #3" />
         <item itemvalue="Application.DemoApplication" />
         <item itemvalue="JUnit.DemoApplicationTests.contextLoads" />
       </list>
@@ -190,7 +224,11 @@
       <workItem from="1713144077872" duration="982000" />
       <workItem from="1713145087086" duration="22585000" />
       <workItem from="1713231027970" duration="120000" />
-      <workItem from="1713232178138" duration="20572000" />
+      <workItem from="1713232178138" duration="21107000" />
+      <workItem from="1713317421428" duration="2976000" />
+      <workItem from="1713320469758" duration="22160000" />
+      <workItem from="1713490577154" duration="11248000" />
+      <workItem from="1713503403839" duration="12468000" />
     </task>
     <servers />
   </component>
@@ -246,6 +284,19 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="10" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="javax.persistence.NonUniqueResultException" package="javax.persistence" />
+          <option name="timeStamp" value="12" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/serviceImpl/ProductImpl.java</url>
+          <line>273</line>
+          <properties class="com.example.demo.service.serviceImpl.ProductImpl" method="deleteMultipleProducts">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>

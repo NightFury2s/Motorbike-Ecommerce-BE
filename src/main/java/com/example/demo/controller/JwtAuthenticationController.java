@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.Util.GetInfoUser;
+
 import com.example.demo.model.Dto.JwtRequest;
 import com.example.demo.model.Dto.UserRequestDto;
 import com.example.demo.service.serviceImpl.JwtUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +16,12 @@ public class JwtAuthenticationController {
         this.userDetailsService = userDetailsService;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserRequestDto user) throws Exception {
+    @PostMapping("/register")
+    public ResponseEntity<?> saveUser(@RequestBody UserRequestDto user) {
         return userDetailsService.save(user);
     }
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         return userDetailsService.login(authenticationRequest);
     }

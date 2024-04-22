@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Dto.ShoppingCartDto;
 import com.example.demo.service.ShoppingCartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user/shoppingCart")
@@ -21,9 +19,19 @@ public class ShoppingCartController {
         return shoppingCartService.addCart(shoppingCartDto);
     }
 
+    @PutMapping("/update-Cart")
+    public ResponseEntity<?> updateCart(@RequestParam("idCartDetail") long idCartDetail, @RequestParam("quantityCart") int quantityCart) {
+        return shoppingCartService.updateCart(idCartDetail, quantityCart);
+    }
+
+    @PostMapping("/payment")
+    public ResponseEntity<?> payment() {
+        return shoppingCartService.paymentCart();
+    }
+
     @GetMapping("/getall")
     public ResponseEntity<?> getAll() {
-        return shoppingCartService.getAll();
+        return shoppingCartService.getAllCard();
     }
 
     @PostMapping("/getCartByUser")
@@ -32,8 +40,8 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delteteByIdShoppingCartDetail(@RequestParam("id") long id) {
-        return shoppingCartService.delteteByIdShoppingCartDetail(id);
+    public ResponseEntity<?> deleteByIdShoppingCartDetail(@RequestParam("id") long id) {
+        return shoppingCartService.deleteByIdShoppingCartDetail(id);
     }
 
 

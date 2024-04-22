@@ -28,13 +28,13 @@ public class ShoppingCartDtoReturn {
         this.status = shoppingCart.getStatus();
         this.paymentDate = shoppingCart.getPaymentDate();
 
-        this.shoppingCartDetailsDto =shoppingCart.getShoppingCartDetails().stream()
+        this.shoppingCartDetailsDto = shoppingCart.getShoppingCartDetails().stream()
                 .map(ShoppingCartDetailDto::new)
                 .collect(Collectors.toList());
 
-        this.totalPrice =  shoppingCart.getShoppingCartDetails().stream()
-                .map(detail -> new ProductSomeReponseDto(detail.getProduct()))
-                .mapToDouble(ProductSomeReponseDto::getNewPrice)
-                .sum();
+        for (ShoppingCartDetailDto a : shoppingCartDetailsDto) {
+            this.totalPrice += (double) a.getProductSomeReponseDto().getNewPrice() * a.getQuantityCart();
+        }
+
     }
 }

@@ -1,7 +1,6 @@
 package com.example.demo.model.Dto;
 
 import com.example.demo.model.entity.DAOUser;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -27,7 +27,7 @@ public class ShoppingCart {
     private DAOUser user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ShoppingCartId")
+    @JoinColumn(name = "ShoppingCartId",nullable = false)
     private List<ShoppingCartDetail> shoppingCartDetails = new ArrayList<>();
 
 

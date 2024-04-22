@@ -2,11 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.service.OTPService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
+
 
 @Slf4j
 @RestController
@@ -20,12 +19,12 @@ public class OTPController {
     }
 
     @PostMapping("/otp")
-    public ResponseEntity<?> email(@RequestParam("email") String email) throws MessagingException {
+    public ResponseEntity<?> email(@RequestParam("email") String email){
         return otpService.sendOTP(email);
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPass(@RequestParam("email") String email, @RequestParam("otp") String otp) throws MessagingException {
+    public ResponseEntity<?> resetPass(@RequestParam("email") String email, @RequestParam("otp") String otp)  {
         return otpService.resetPassword(email, otp);
     }
 }
