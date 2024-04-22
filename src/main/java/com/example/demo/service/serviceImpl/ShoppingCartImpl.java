@@ -39,9 +39,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
         this.messenger = messenger;
         this.shoppingCartRepository = shoppingCartRepository;
         this.userRepository = userRepository;
-
         this.productRepository = productRepository;
-
         this.shoppingCartDetailRepository = shoppingCartDetailRepository;
     }
 
@@ -207,7 +205,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     @Override
     public ResponseEntity<?> deleteByIdShoppingCartDetail(Long id) {
-        if (shoppingCartRepository.existsByUser_UsernameAndShoppingCartDetails_Id(getUsername(), id)) {
+        if (shoppingCartRepository.existsByUser_UsernameAndShoppingCartDetails_Id( getUsername() , id)) {
             shoppingCartDetailRepository.deleteById(id);
             messenger.setMessenger("Xóa sản phẩm thành công");
             return new ResponseEntity<>(messenger, HttpStatus.OK);

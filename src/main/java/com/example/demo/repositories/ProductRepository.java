@@ -36,5 +36,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByTypeProduct_IdOrderByPriceAsc(Long id, Pageable pageable);
 
 
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:name%")
+    Page<Product> findByName(String name, Pageable pageable);
+
 
 }

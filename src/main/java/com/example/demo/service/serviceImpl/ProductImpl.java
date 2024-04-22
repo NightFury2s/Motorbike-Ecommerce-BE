@@ -331,4 +331,32 @@ public class ProductImpl implements ProductService {
         }
 
     }
+
+    @Override
+    public ResponseEntity<?> findByNameProduct(int page, int size, String nameProduct) {
+        try {
+            //lay 1 page tu csdl
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Product> productsPage = productRepository.findByName(nameProduct, pageable);
+
+            //khoi tao 1 ProductSomePageReturnDTO de Response
+            ProductSomePageResponseDTO productSomePageResponseDTO = new ProductSomePageResponseDTO();
+            //set du lieu cho ProductSomePageResponseDTO
+
+            //goi ham getProductSomePageResponseDTO de lay du lieu cho setProductSomeReturns
+            productSomePageResponseDTO.setProductSomeReponseDtos(getProductSomePageResponseDTO(productsPage));
+
+            productSomePageResponseDTO.setPage(productsPage.getNumber());
+            productSomePageResponseDTO.setSize(productsPage.getSize());
+            productSomePageResponseDTO.setTotalElements(productsPage.getTotalElements());
+            productSomePageResponseDTO.setTotalPages(productsPage.getTotalPages());
+
+            log.info("Retrieved partial product list from page {}: successful", page);
+            return new ResponseEntity<>(productSomePageResponseDTO, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Error while getting partial product list");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -52,17 +52,21 @@ public class ProductController {
     public ResponseEntity<?> getProductDetail(@PathVariable Long idProduct) {
         return productService.getDetail(idProduct);
     }
+    @GetMapping("/productcar/find-by-name-product/{page}/{size}/{nameProduct}")
+    public ResponseEntity<?> findByNameProduct(@PathVariable int page, @PathVariable int size, @PathVariable String nameProduct) {
+        return productService.findByNameProduct(page, size, nameProduct);
+    }
 
-    @DeleteMapping("/admin/productcar/delete/{id}")
+    @DeleteMapping("/admin/product/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         return productService.delete(id);
     }
-    @DeleteMapping("/admin/productcar/delete-multiple-products")
+    @DeleteMapping("/admin/product/delete-multiple-products")
     public ResponseEntity<?> deleteMultipleProducts(@RequestBody List<Long> ids) {
         return productService.deleteMultipleProducts(ids);
     }
 
-    @PutMapping("/admin/productcar/put/{id}")
+    @PutMapping("/admin/product/put/{id}")
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody ProductDto productDto) {
         return productService.put(id, productDto);
     }

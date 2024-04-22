@@ -5,7 +5,7 @@ import com.example.demo.service.ShoppingCartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("user/shoppingCart")
+@RequestMapping("user/shopping-cart")
 @RestController
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
@@ -14,7 +14,7 @@ public class ShoppingCartController {
         this.shoppingCartService = shoppingCartService;
     }
 
-    @PostMapping("/addToCart")
+    @PostMapping("/add-to-cart")
     public ResponseEntity<?> addTypeProduct(@RequestBody ShoppingCartDto shoppingCartDto) {
         return shoppingCartService.addCart(shoppingCartDto);
     }
@@ -29,12 +29,12 @@ public class ShoppingCartController {
         return shoppingCartService.paymentCart();
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/get-all")
     public ResponseEntity<?> getAll() {
         return shoppingCartService.getAllCard();
     }
 
-    @PostMapping("/getCartByUser")
+    @PostMapping("/get-cart-by-user")
     public ResponseEntity<?> getCartByUser() {
         return shoppingCartService.getCartByUser();
     }
