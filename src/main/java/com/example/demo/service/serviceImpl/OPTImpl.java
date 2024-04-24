@@ -105,7 +105,8 @@ public class OPTImpl implements OTPService {
         // Trả về true nếu mã OTP còn hạn, ngược lại trả về false
         return otp != null && Objects.equals(otp.getOtp(), otpRequest);
     }
-    public boolean isExpiredOTP (Long userId, String otpRequest) {
+
+    public boolean isExpiredOTP(Long userId) {
         OTP otp = otpRepository.findById(userId).orElse(null);
         return otp != null && otp.getExpirationTime().isAfter(Instant.now());
     }
@@ -122,7 +123,8 @@ public class OPTImpl implements OTPService {
             if (!isOTPValid(user.getId(), otp)) {
                 messenger.setMessenger("Mã xác nhận không đúng. ");
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
-            } if (!isExpiredOTP(user.getId(), otp)) {
+            }
+            if (!isExpiredOTP(user.getId())) {
                 messenger.setMessenger("Mã xác nhận đã hết hạn . ");
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
@@ -133,7 +135,7 @@ public class OPTImpl implements OTPService {
             user.setPassword(bcryptEncoder.encode(passwordReset));
             userRepository.save(user);
 
-             //Gửi email thông báo về mật khẩu mới
+            //Gửi email thông báo về mật khẩu mới
             String emailSubject = "[Motorbike Ecommerce] - Đặt lại mật khẩu";
             String emailContent = generateResetPasswordEmailContent(user.getFullName(), passwordReset);
             gmailService.constructEmailWithHTML(emailSubject, emailContent, user.getEmail());

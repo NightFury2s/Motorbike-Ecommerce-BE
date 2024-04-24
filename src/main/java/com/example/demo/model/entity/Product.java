@@ -29,9 +29,8 @@ public class Product {
     @Column(name = "describe", columnDefinition = "TEXT")
     private String describe;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "productMoto_id")
-// @Fetch(FetchMode.SUBSELECT)
     private List<Img> images = new ArrayList<>();
 
 }

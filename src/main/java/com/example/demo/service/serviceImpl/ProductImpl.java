@@ -1,13 +1,13 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.model.Dto.*;
+import com.example.demo.model.entity.Img;
 import com.example.demo.model.entity.Product;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.TypeProducRepository;
 import com.example.demo.service.ProductService;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,20 +15,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Slf4j
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Service
 public class ProductImpl implements ProductService {
 
+    private static final Logger log = LogManager.getLogger(ProductImpl.class);
+
     private final Messenger messenger;
 
-    private final  ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    private final  TypeProducRepository typeProductRepository;
+    private final TypeProducRepository typeProductRepository;
 
     public ProductImpl(Messenger messenger, ProductRepository productRepository, TypeProducRepository typeProductRepository) {
         this.messenger = messenger;
@@ -92,7 +94,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> getSome(int page, int size,Long idType) {
+    public ResponseEntity<?> getSome(int page, int size, Long idType) {
         try {
             //lay 1 page tu csdl
             Pageable pageable = PageRequest.of(page, size);
@@ -117,7 +119,6 @@ public class ProductImpl implements ProductService {
             log.error("Error while getting partial product list: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        //  return null;
     }
 
     @Override
@@ -147,23 +148,23 @@ public class ProductImpl implements ProductService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     private static List<ProductSomeReponseDto> getProductSomePageResponseDTO(Page<Product> productsPage) {
-        return productsPage.stream()
-                .map(ProductSomeReponseDto::new)
-                .collect(Collectors.toList());
+        return productsPage.stream().map(ProductSomeReponseDto::new).collect(Collectors.toList());
     }
+
     @Override
     public ResponseEntity<?> getDetail(Long idProduct) {
         try {
-            Product productDB =productRepository.findById(idProduct).orElse(null);
-            if (ObjectUtils.isEmpty(productDB)){
+            Product productDB = productRepository.findById(idProduct).orElse(null);
+            if (ObjectUtils.isEmpty(productDB)) {
                 messenger.setMessenger("Sản phẩm không tồn tại.");
                 return new ResponseEntity<>(messenger, HttpStatus.OK);
             }
 
             ProductDetailDto product = new ProductDetailDto(productDB);
             return new ResponseEntity<>(product, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Error while getting partial product list: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -184,7 +185,7 @@ public class ProductImpl implements ProductService {
             } else if ("ASC".equalsIgnoreCase(arrange)) {
                 productsPage = productRepository.findByDetailTypeOrderByPriceAsc(detailType, pageable);
             } else {
-                productsPage=productRepository.findByDetailType(detailType, pageable);
+                productsPage = productRepository.findByDetailType(detailType, pageable);
             }
 
             // Tạo đối tượng DTO để trả về
@@ -221,7 +222,7 @@ public class ProductImpl implements ProductService {
             } else if ("ASC".equalsIgnoreCase(arrange)) {
                 productsPage = productRepository.findByTypeProduct_IdOrderByPriceAsc(typeProduct_Id, pageable);
             } else {
-                productsPage  =productRepository.findByTypeProduct_Id(typeProduct_Id, pageable);
+                productsPage = productRepository.findByTypeProduct_Id(typeProduct_Id, pageable);
             }
 
             // Tạo đối tượng DTO để trả về
@@ -244,6 +245,7 @@ public class ProductImpl implements ProductService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @Override
     public ResponseEntity<?> delete(long id) {
         try {
@@ -262,7 +264,29 @@ public class ProductImpl implements ProductService {
         } catch (Exception e) {
             log.error("Error while deleting product: {}", e.getMessage());
             messenger.setMessenger("This product cannot be deleted ");
-            return new ResponseEntity<>(messenger,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(messenger, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> deleteMultipleProducts(List<Long> ids) {
+        try {
+            StringBuilder message = new StringBuilder();
+            for (Long id : ids) {
+                if (productRepository.existsById(id)) {
+                    productRepository.deleteById(id);
+                    log.info("Deleted product successfully: {}", id);
+                    message.append("Deleted product successfully: ").append(id).append("\n");
+                } else {
+                    log.error("Failed to delete product: Product with id {} not found", id);
+                    message.append("Failed to delete product: Product with id ").append(id).append(" not found\n");
+                }
+            }
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error while deleting product: {}", e.getMessage());
+            messenger.setMessenger("This product cannot be deleted ");
+            return new ResponseEntity<>(messenger, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -280,19 +304,18 @@ public class ProductImpl implements ProductService {
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
             product.setQuantity(productDto.getQuantity());
-
-
             product.setDetailType(productDto.getDetailType());
 
+            List<Img> img = productDto.getImages();
 
-            //  product.setImages(null);
-            // product.setImages(productDto.getImages());
+            //img.add()
+            product.setImages(img);
 
             product.setDiscount(productDto.getDiscount());
             product.setDescribe(productDto.getDescribe());
             product.setTypeProduct(typeProductRepository.findById(productDto.getIdTypeProduct()).orElse(null));
 
-            if (ObjectUtils.isEmpty( product.getTypeProduct())) {
+            if (ObjectUtils.isEmpty(product.getTypeProduct())) {
                 log.error("Failed to update product: TypeProduct is null");
                 messenger.setMessenger("Failed to update product");
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
@@ -307,5 +330,33 @@ public class ProductImpl implements ProductService {
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @Override
+    public ResponseEntity<?> findByNameProduct(int page, int size, String nameProduct) {
+        try {
+            //lay 1 page tu csdl
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Product> productsPage = productRepository.findByName(nameProduct, pageable);
+
+            //khoi tao 1 ProductSomePageReturnDTO de Response
+            ProductSomePageResponseDTO productSomePageResponseDTO = new ProductSomePageResponseDTO();
+            //set du lieu cho ProductSomePageResponseDTO
+
+            //goi ham getProductSomePageResponseDTO de lay du lieu cho setProductSomeReturns
+            productSomePageResponseDTO.setProductSomeReponseDtos(getProductSomePageResponseDTO(productsPage));
+
+            productSomePageResponseDTO.setPage(productsPage.getNumber());
+            productSomePageResponseDTO.setSize(productsPage.getSize());
+            productSomePageResponseDTO.setTotalElements(productsPage.getTotalElements());
+            productSomePageResponseDTO.setTotalPages(productsPage.getTotalPages());
+
+            log.info("Retrieved partial product list from page {}: successful", page);
+            return new ResponseEntity<>(productSomePageResponseDTO, HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Error while getting partial product list");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
