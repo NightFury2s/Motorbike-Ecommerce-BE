@@ -3,7 +3,6 @@ package com.example.demo.Util;
 import com.example.demo.model.Dto.sms;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 public class SendSMS {

@@ -15,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
@@ -76,9 +78,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .and()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register", "/otp/**", "/productcar/**", "/product/**", "/reviews/**").permitAll()
+                .antMatchers("/authenticate", "/register", "/otp/**", "/productcar/**", "/product/**", "/reviews/**", "/hello").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll().
-                antMatchers("/admin/**").hasRole("ADMIN")
+                antMatchers("/admin/**", "/user/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER").
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
@@ -98,4 +100,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .allowedMethods("*")  // Cho phép tất cả các method (GET, POST, PUT, DELETE, etc.)
                 .allowedHeaders("*");  // Cho phép tất cả các headers
     }
+
 }

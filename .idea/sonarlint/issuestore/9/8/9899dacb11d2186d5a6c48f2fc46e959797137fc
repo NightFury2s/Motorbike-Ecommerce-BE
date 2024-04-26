@@ -1,0 +1,12 @@
+
+´
+java:S4601T"lReorder the URL patterns from most to less specific, the pattern "/user/**" should occurs before "/user/**".(İ“œ«ıÿÿÿÿ8³†‰ğ1J$9ab02090-6e33-483d-9d4e-32c87988d87d
+¾
+java:S1128"{Remove this unused import 'org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity'.(Ô¦ø8Ä†‰ğ1J$4dff8730-2f10-4a43-afb2-3f32461919a1
+·
+java:S1128
+"oRemove this unused import 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity'.(ŸÜÑıÿÿÿÿ8Ä†‰ğ1J$11ab6e45-ba93-4ef9-8f0d-65c257d68ef8
+¡
+java:S1128"YRemove this unused import 'org.springframework.web.cors.UrlBasedCorsConfigurationSource'.(µ²İûùÿÿÿÿ8¨µ™ğ1J$981a788f-fedf-41c6-b78e-95cbe3d9f86d
+
+java:S1128"FRemove this unused import 'org.springframework.web.filter.CorsFilter'.(¨­ŸØøÿÿÿÿ8©µ™ğ1J$5bd0084e-b882-4883-84f0-80b603016f11
