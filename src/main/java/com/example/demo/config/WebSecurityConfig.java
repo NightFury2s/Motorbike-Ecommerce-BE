@@ -21,7 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -72,33 +72,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
-        httpSecurity.csrf().disable()
-                .cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        httpSecurity.cors()
                 .and()
+                .csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register", "/otp/**", "/productcar/**", "/product/**", "/reviews/**", "/hello").permitAll()
+                .antMatchers("/authenticate", "/register", "/otp/**", "/productcar/**", "/product/**", "/reviews/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll().
-                antMatchers("/admin/**", "/user/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER").
+                antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 // all other requests need to be authenticated
-                        anyRequest().authenticated().and().
+                .anyRequest().authenticated().and()
                 // make sure we use stateless session; session won't be used to
                 // store user's state.
-                        exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")  // Cho phép tất cả các origin
-                .allowedMethods("*")  // Cho phép tất cả các method (GET, POST, PUT, DELETE, etc.)
-                .allowedHeaders("*");  // Cho phép tất cả các headers
-    }
+
 
 }

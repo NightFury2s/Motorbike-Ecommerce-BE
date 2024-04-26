@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.example.demo.constants.ConstantsReview;
 import com.example.demo.model.Dto.CommentDto;
 import com.example.demo.model.Dto.Messenger;
 import com.example.demo.model.Dto.ReviewsDto;
@@ -38,7 +39,7 @@ public class ReviewsImpl implements ReviewsService {
 
         try {
             if (reviewsDto.getRating() > 5 || reviewsDto.getRating() < 1) {
-                messenger.setMessenger("Đánh giá từ 1 đến 5 sao");
+                messenger.setMessenger(ConstantsReview.RATING_RANGE);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
             Reviews reviews = new Reviews();
@@ -50,10 +51,10 @@ public class ReviewsImpl implements ReviewsService {
             reviews.setProduct(productRepository.findById(reviewsDto.getId_product()).orElse(null));
 
             reviewsRepository.save(reviews);
-            messenger.setMessenger(" add reviews successfully.");
+            messenger.setMessenger(ConstantsReview.ADD_SUCCESS);
             return new ResponseEntity<>(reviews, HttpStatus.OK);
         } catch (Exception e) {
-            messenger.setMessenger("add reviews error");
+            messenger.setMessenger(ConstantsReview.ADD_ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
 

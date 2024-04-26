@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.Util.GmailService;
 import com.example.demo.Util.PasswordGenerator;
+import com.example.demo.constants.ConstantsOtp;
 import com.example.demo.model.Dto.Messenger;
 import com.example.demo.model.entity.DAOUser;
 import com.example.demo.model.entity.OTP;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Slf4j
@@ -65,18 +65,18 @@ public class OPTImpl implements OTPService {
         try {
             DAOUser user = userRepository.findByEmail(email.trim()).orElse(null);
 
-            if (user == null) {
-                messenger.setMessenger("Địa chỉ email không đúng hoặc không tồn tại.");
+            if (Objects.isNull(user) ) {
+                messenger.setMessenger(ConstantsOtp.INVALID_EMAIL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
             //tạo và lưu OTP vào csdl
             String otp = generateAndSaveOTPForUser(user.getId());
             gmailService.constructEmailWithHTML("[Motorbike Ecommerce] - Đặt lại mật khẩu", generateOTPContent(user.getFullName(), otp), user.getEmail());
 
-            messenger.setMessenger("Mã OTP đã được đặt lại và thông báo đã được gửi đến email của bạn.");
+            messenger.setMessenger(ConstantsOtp.SEND_OTP_UCCESSFULLY);
             return new ResponseEntity<>(messenger, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Có lỗi xảy ra khi gửi OTP.");
+            return ResponseEntity.badRequest().body(ConstantsOtp.ERROR_SEND_OTP);
         }
 
     }
@@ -103,12 +103,12 @@ public class OPTImpl implements OTPService {
         OTP otp = otpRepository.findById(userId).orElse(null);
         // Không tìm thấy mã OTP cho người dùng hoacv
         // Trả về true nếu mã OTP còn hạn, ngược lại trả về false
-        return otp != null && Objects.equals(otp.getOtp(), otpRequest);
+        return !Objects.isNull(otp) && Objects.equals(otp.getOtp(), otpRequest);
     }
 
     public boolean isExpiredOTP(Long userId) {
         OTP otp = otpRepository.findById(userId).orElse(null);
-        return otp != null && otp.getExpirationTime().isAfter(Instant.now());
+        return !Objects.isNull(otp) && otp.getExpirationTime().isAfter(Instant.now());
     }
 
     @Override
@@ -116,16 +116,16 @@ public class OPTImpl implements OTPService {
         try {
             DAOUser user = userRepository.findByEmail(email.trim()).orElse(null);
             if (ObjectUtils.isEmpty(user)) {
-                messenger.setMessenger("Email không tồn tại, vui lòng kiểm tra lại. ");
+                messenger.setMessenger(ConstantsOtp.INVALID_EMAIL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
 
             if (!isOTPValid(user.getId(), otp)) {
-                messenger.setMessenger("Mã xác nhận không đúng. ");
+                messenger.setMessenger(ConstantsOtp.WRONG_OTP);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
             if (!isExpiredOTP(user.getId())) {
-                messenger.setMessenger("Mã xác nhận đã hết hạn . ");
+                messenger.setMessenger(ConstantsOtp.EXPIRED_OTP);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
 
@@ -142,12 +142,12 @@ public class OPTImpl implements OTPService {
 
             // xóa otp sau khi đặt lại mật khẩu thành công
             otpRepository.deleteById(user.getId());
-            messenger.setMessenger("Mật khẩu đã được đặt lại và đã được gửi đến email của bạn.");
+            messenger.setMessenger(ConstantsOtp.SEND_PASSWORD_SUCCESSFULLY);
             return new ResponseEntity<>(messenger, HttpStatus.OK);
 
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Có lỗi xảy ra khi đặt lại mật khẩu.");
+            return ResponseEntity.badRequest().body(ConstantsOtp.EXPIRED_OTP);
         }
     }
 

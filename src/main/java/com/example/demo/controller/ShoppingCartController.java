@@ -19,7 +19,7 @@ public class ShoppingCartController {
         return shoppingCartService.addCart(shoppingCartDto);
     }
 
-    @PutMapping("/update-Cart")
+    @PutMapping("/update-cart")
     public ResponseEntity<?> updateCart(@RequestParam("idCartDetail") long idCartDetail, @RequestParam("quantityCart") int quantityCart) {
         return shoppingCartService.updateCart(idCartDetail, quantityCart);
     }

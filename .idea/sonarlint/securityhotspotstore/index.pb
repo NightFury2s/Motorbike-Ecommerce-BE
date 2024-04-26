@@ -141,3 +141,17 @@ Y
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 ]
 -.idea/httpRequests/2024-04-21T110543.404.json,d\0\d06a36d2589dfab811bb626ec078c6758c7d209a
+e
+5src/main/java/com/example/demo/config/CorsConfig.java,3\7\3706d80c65915e9339fa9aa641140902f83eb180
+]
+-src/main/java/com/example/demo/constants.java,2\7\27ef988ba9cb9cf5a3dad6e75e0d1f1f97607c03
+g
+7src/main/java/com/example/demo/constants/Constants.java,c\2\c2b333028475c0d4b7d66428e5325281ee7b359c
+l
+<src/main/java/com/example/demo/constants/ConstantsEmail.java,c\f\cfde87ae25a8c1f00d42a4333c3a6c7b2b5768cb
+j
+:src/main/java/com/example/demo/constants/ConstantsOtp.java,7\4\7430499983139a404c3ff52d4d48b9063461ff8e
+n
+>src/main/java/com/example/demo/constants/ConstantsProduct.java,d\c\dc27d933e23c92cb66f75373bdef2bf0842a2d05
+k
+;src/main/java/com/example/demo/constants/ConstantsUser.java,c\b\cb5ec75631aa575a62462b695e88fd9db1c6aca5
