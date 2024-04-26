@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import com.example.demo.model.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByTypeProduct_NameTypeContainingIgnoreCase(String partialName);
 
     //search by idTypeProduct
-    Page<Product> findByTypeProduct_Id(Long id, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE p.typeProduct.id = :id OR :id IS NULL")
+    Page<Product> findByTypeProduct_Id(@Param("id") Long id, Pageable pageable);
+
 
     //search by DetailType
     Page<Product> findByDetailType(Long detailType, Pageable pageable);
@@ -36,11 +40,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByTypeProduct_IdOrderByPriceAsc(Long id, Pageable pageable);
 
 
-<<<<<<< HEAD
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:name%")
     Page<Product> findByName(String name, Pageable pageable);
 
-=======
->>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
+    @Query("select p from Product p where p.typeProduct.id = ?1or p.typeProduct.id = ?2")
+    Page<Product> findByTypeProduct_IdAndTypeProduct_Id(Long id, @Nullable Long id1, Pageable pageable);
 
 }

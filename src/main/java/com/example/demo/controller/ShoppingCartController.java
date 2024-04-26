@@ -19,22 +19,9 @@ public class ShoppingCartController {
         return shoppingCartService.addCart(shoppingCartDto);
     }
 
-    @PutMapping("/update-Cart")
+    @PutMapping("/update-cart")
     public ResponseEntity<?> updateCart(@RequestParam("idCartDetail") long idCartDetail, @RequestParam("quantityCart") int quantityCart) {
         return shoppingCartService.updateCart(idCartDetail, quantityCart);
-<<<<<<< HEAD
-=======
-    }
-
-    @PostMapping("/payment")
-    public ResponseEntity<?> payment() {
-        return shoppingCartService.paymentCart();
-    }
-
-    @GetMapping("/getall")
-    public ResponseEntity<?> getAll() {
-        return shoppingCartService.getAllCard();
->>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
     }
 
     @PostMapping("/payment")

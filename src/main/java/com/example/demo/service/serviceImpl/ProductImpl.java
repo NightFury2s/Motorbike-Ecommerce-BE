@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.example.demo.constants.ConstantsProduct;
 import com.example.demo.model.Dto.*;
 import com.example.demo.model.entity.Img;
 import com.example.demo.model.entity.Product;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,49 +54,26 @@ public class ProductImpl implements ProductService {
             product.setDescribe(dto.getDescribe());
             product.setTypeProduct(typeProductRepository.findById(dto.getIdTypeProduct()).orElse(null));
 
-            if (product.getTypeProduct() == null) {
+            if (ObjectUtils.isEmpty(product.getTypeProduct())) {
                 log.error("Failed to add product. TypeProduct is null");
-                messenger.setMessenger("Type  null");
+                messenger.setMessenger(ConstantsProduct.TYPE_NULL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
 
             productRepository.save(product);
             log.info("Added new product: {}", product.getName());
-            messenger.setMessenger("add success");
+            messenger.setMessenger(ConstantsProduct.ADD_PRODUCT_SUCCESS);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error while adding product: {}", e.getMessage());
-            messenger.setMessenger("Error while adding product");
+            messenger.setMessenger(ConstantsProduct.ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @Override
-    public ResponseEntity<?> getAll(int page, int size) {
-        try {
-            // Tạo Pageable để lấy danh sách sản phẩm trang hiện tại
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Product> productsPage = productRepository.findAll(pageable);
-
-            // Tạo đối tượng ProductPageDTO và đặt các giá trị
-            ProductPageDTO productPageDTO = new ProductPageDTO();
-            productPageDTO.setProducts(productsPage.getContent());
-            productPageDTO.setPage(productsPage.getNumber());
-            productPageDTO.setSize(productsPage.getSize());
-            productPageDTO.setTotalElements(productsPage.getTotalElements());
-            productPageDTO.setTotalPages(productsPage.getTotalPages());
-            log.info("Retrieved product list from page {}: successful", page);
-            return new ResponseEntity<>(productPageDTO, HttpStatus.OK);
-        } catch (Exception e) {
-            // Xử lý lỗi nếu có
-            log.error("Error while getting product list: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @Override
-    public ResponseEntity<?> getSome(int page, int size, Long idType) {
+    public ResponseEntity<?> getByIdType(int page, int size, Long idType) {
         try {
             //lay 1 page tu csdl
             Pageable pageable = PageRequest.of(page, size);
@@ -158,7 +137,7 @@ public class ProductImpl implements ProductService {
         try {
             Product productDB = productRepository.findById(idProduct).orElse(null);
             if (ObjectUtils.isEmpty(productDB)) {
-                messenger.setMessenger("Sản phẩm không tồn tại.");
+                messenger.setMessenger(ConstantsProduct.PRODUCT_EMTY);
                 return new ResponseEntity<>(messenger, HttpStatus.OK);
             }
 
@@ -253,39 +232,40 @@ public class ProductImpl implements ProductService {
                 productRepository.deleteById(id);
 
                 log.info("Deleted product successfully: {}", id);
-                messenger.setMessenger("delete successfully ");
+                messenger.setMessenger(ConstantsProduct.DELETE_PRODUCT_SUCCESS + id);
 
                 return new ResponseEntity<>(messenger, HttpStatus.OK);
 
             }
             log.error("Failed to delete product: Product with id {} not found", id);
-            messenger.setMessenger("empty");
+            messenger.setMessenger(ConstantsProduct.PRODUCT_EMTY);
             return new ResponseEntity<>(messenger, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("Error while deleting product: {}", e.getMessage());
-            messenger.setMessenger("This product cannot be deleted ");
-            return new ResponseEntity<>(messenger, HttpStatus.INTERNAL_SERVER_ERROR);
+            messenger.setMessenger(ConstantsProduct.ERROR);
+            return new ResponseEntity<>(messenger, HttpStatus.NOT_FOUND);
         }
     }
 
     @Override
     public ResponseEntity<?> deleteMultipleProducts(List<Long> ids) {
         try {
+            List<String> deleteMultipleProducts = new ArrayList<>();
             StringBuilder message = new StringBuilder();
             for (Long id : ids) {
                 if (productRepository.existsById(id)) {
-                    productRepository.deleteById(id);
+                    //   productRepository.deleteById(id);
                     log.info("Deleted product successfully: {}", id);
-                    message.append("Deleted product successfully: ").append(id).append("\n");
+                    deleteMultipleProducts.add(ConstantsProduct.DELETE_PRODUCT_SUCCESS + id);
                 } else {
                     log.error("Failed to delete product: Product with id {} not found", id);
-                    message.append("Failed to delete product: Product with id ").append(id).append(" not found\n");
+                    deleteMultipleProducts.add(ConstantsProduct.DELETE_PRODUCT_FAILSE_WRONG + id);
                 }
             }
-            return new ResponseEntity<>(message, HttpStatus.OK);
+            return new ResponseEntity<>(deleteMultipleProducts, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error while deleting product: {}", e.getMessage());
-            messenger.setMessenger("This product cannot be deleted ");
+            log.error(ConstantsProduct.ERROR, e.getMessage());
+            messenger.setMessenger(ConstantsProduct.ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -295,9 +275,9 @@ public class ProductImpl implements ProductService {
     public ResponseEntity<?> put(long id, ProductDto productDto) {
         try {
             Product product = productRepository.findById(id).orElse(null);
-            if (product == null) {
+            if (ObjectUtils.isEmpty(product)) {
                 log.error("Failed to update product: Product with id {} not found", id);
-                messenger.setMessenger(" Product null");
+                messenger.setMessenger(ConstantsProduct.TYPE_NULL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
 
@@ -317,16 +297,16 @@ public class ProductImpl implements ProductService {
 
             if (ObjectUtils.isEmpty(product.getTypeProduct())) {
                 log.error("Failed to update product: TypeProduct is null");
-                messenger.setMessenger("Failed to update product");
+                messenger.setMessenger(ConstantsProduct.TYPE_NULL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
             productRepository.save(product);
             log.info("Updated product successfully: {}", product.getName());
-            messenger.setMessenger("put success");
+            messenger.setMessenger(ConstantsProduct.PUT_PRODUCT_SUCCESS);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error while updating product: {}", e.getMessage());
-            messenger.setMessenger("Error while updating product");
+            messenger.setMessenger(ConstantsProduct.ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
 
