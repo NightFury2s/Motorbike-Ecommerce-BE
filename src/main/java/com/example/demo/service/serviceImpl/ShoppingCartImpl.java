@@ -205,7 +205,11 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     @Override
     public ResponseEntity<?> deleteByIdShoppingCartDetail(Long id) {
+<<<<<<< HEAD
         if (shoppingCartRepository.existsByUser_UsernameAndShoppingCartDetails_Id( getUsername() , id)) {
+=======
+        if (shoppingCartRepository.existsByUser_UsernameAndShoppingCartDetails_Id(getUsername(), id)) {
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
             shoppingCartDetailRepository.deleteById(id);
             messenger.setMessenger("Xóa sản phẩm thành công");
             return new ResponseEntity<>(messenger, HttpStatus.OK);

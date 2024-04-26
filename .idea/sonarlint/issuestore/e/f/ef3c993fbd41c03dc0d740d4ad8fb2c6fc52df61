@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 “	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÝØÙþ8ÛÜƒªð1J$cee31b9e-8ff3-41a0-a488-41879ab50d5b
 i
 java:S1452	"&Remove usage of generic wildcard type.(šù ¯8áÜƒªð1J$3f40e9ce-346d-4cd7-934b-a2d90cb88a18
@@ -23,3 +24,27 @@ i
 java:S1452"&Remove usage of generic wildcard type.(»Äµ°8èÜƒªð1J$dec96502-3049-4a9e-bffa-a21fe94d519d
 n
 java:S1452"&Remove usage of generic wildcard type.(µÀøßùÿÿÿÿ8éÜƒªð1J$b39cae8b-aab1-4e42-ad3a-06d41057cdf5
+=======
+Œ	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÝØÙþJ$e4c9130c-48c7-4809-86e4-72e1fdaedd5a
+b
+java:S1452	"&Remove usage of generic wildcard type.(šù ¯J$abb34245-b93b-43c5-88ca-0bf2afe5d51f
+b
+java:S1452"&Remove usage of generic wildcard type.(Õß“J$92d3f5b0-6b5a-49d0-ab9e-02e0023a457d
+g
+java:S1452"&Remove usage of generic wildcard type.(à°ãÀýÿÿÿÿJ$9487a699-dd68-4f93-84cc-d14a2f194b84
+a
+java:S1452"&Remove usage of generic wildcard type.(³›ÚbJ$435066fa-a229-49ce-b30f-2736089483f5
+g
+java:S1452"&Remove usage of generic wildcard type.(¸Ã»ùÿÿÿÿJ$b5f83d7c-e5ed-4ee2-b010-ad371ba156c6
+g
+java:S1452"&Remove usage of generic wildcard type.(½Ì¾ëúÿÿÿÿJ$150e7d22-122b-4292-ae77-360fd90c52cf
+‰	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÝØÙþJ$84797bc7-ca50-46a0-b6a8-4071ac0a7f26
+b
+java:S1452"&Remove usage of generic wildcard type.(ÝØÙþJ$5ef3cb97-30e0-46bd-8a48-59929adadf12
+b
+java:S1452"&Remove usage of generic wildcard type.(²…ŽŠJ$305a7426-f812-4b87-b5ba-e8816be7514d
+b
+java:S1452"&Remove usage of generic wildcard type.(ûëÓðJ$cf368754-c9fc-4b44-b138-7d7d03edaa56
+b
+java:S1452"&Remove usage of generic wildcard type.(»Äµ°J$065028f8-4f95-4c46-bc69-1993888883a0
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0

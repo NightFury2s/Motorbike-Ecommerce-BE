@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 k
 java:S5411E"(Use a primitive boolean expression here.(°®û…8ÔÎ“Óî1J$fbb191b3-d133-4866-b92d-d57f81e3b0d6
 …
@@ -6,3 +7,12 @@ java:S6813 "BRemove this field injection and use constructor injection instead.
 …
 java:S6813#"BRemove this field injection and use constructor injection instead.(êæÄÞ8£¥ÉÒî1J$88974720-3cba-47c8-94c5-af266e4d23be
 k	java:S106:"+Replace this use of System.out by a logger.( ÈÍ“ÿÿÿÿÿJ$cd1fde24-ddd2-4b4d-bbf0-7c7e55bd56f3
+=======
+E
+java:S5411E"(Use a primitive boolean expression here.(°®û…8ÔÎ“Óî1
+…
+java:S6813 "BRemove this field injection and use constructor injection instead.(êæÄÞ8£¥ÉÒî1J$7f76aa2e-0fcb-4778-8898-6b61de5c33af
+…
+java:S6813#"BRemove this field injection and use constructor injection instead.(êæÄÞ8£¥ÉÒî1J$76134427-f4a5-44b7-8ca0-43a86214c8c6
+k	java:S106:"+Replace this use of System.out by a logger.( ÈÍ“ÿÿÿÿÿJ$c57a7a16-ad40-4d26-b8fd-0f02eb42cd84
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0

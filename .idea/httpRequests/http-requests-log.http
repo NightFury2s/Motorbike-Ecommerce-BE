@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 GET http://localhost:8080/reviews/get/1
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
 Accept-Encoding: br, deflate, gzip, x-gzip
@@ -83,6 +84,8 @@ content-length: 0
 
 ###
 
+=======
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
 DELETE http://localhost:8080/admin/productcar/delete-multiple-products
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
 Accept-Encoding: br, deflate, gzip, x-gzip

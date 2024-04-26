@@ -1,5 +1,11 @@
 
 b
+<<<<<<< HEAD
 java:S1452"&Remove usage of generic wildcard type.(áÆ“öJ$12ed7965-9d75-42fc-ac4f-28b1f53c2aca
 a
 java:S1452"&Remove usage of generic wildcard type.(ÿŸtJ$5aa5b931-90c6-49b8-8f86-c4cf535f7eed
+=======
+java:S1452"&Remove usage of generic wildcard type.(áÆ“öJ$0a1de3a1-f987-4c3e-885d-04c6bcddc728
+a
+java:S1452"&Remove usage of generic wildcard type.(ÿŸtJ$043f54a9-d3be-47ad-aeac-21adbbd9fe5b
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0

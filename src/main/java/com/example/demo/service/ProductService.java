@@ -27,7 +27,10 @@ public interface ProductService {
     ResponseEntity<?> deleteMultipleProducts(List<Long> ids);
 
     ResponseEntity<?> put(long id, ProductDto productDto);
+<<<<<<< HEAD
 
     public ResponseEntity<?> findByNameProduct(int page, int size, String nameProduct);
 
+=======
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
 }

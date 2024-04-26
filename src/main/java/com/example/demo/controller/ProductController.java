@@ -61,7 +61,11 @@ public class ProductController {
     public ResponseEntity<?> delete(@PathVariable long id) {
         return productService.delete(id);
     }
+<<<<<<< HEAD
     @DeleteMapping("/admin/product/delete-multiple-products")
+=======
+    @DeleteMapping("/admin/productcar/delete-multiple-products")
+>>>>>>> fbd9aa51f0af72ec3d5f152ef13d047e123434b0
     public ResponseEntity<?> deleteMultipleProducts(@RequestBody List<Long> ids) {
         return productService.deleteMultipleProducts(ids);
     }
