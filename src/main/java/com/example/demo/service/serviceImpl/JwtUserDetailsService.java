@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.Util.CheckEmptys;
 import com.example.demo.config.JwtTokenUtil;
+import com.example.demo.constants.ConstantsUser;
 import com.example.demo.model.Dto.*;
 import com.example.demo.model.entity.DAOUser;
 import com.example.demo.model.entity.Role;
@@ -66,7 +67,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         // Create a list to store user's authorities (roles)
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        // Add roles to authorities
+        // Add roles to authoritiesA
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole()));
         // You can add more roles as needed
 
@@ -95,46 +96,46 @@ public class JwtUserDetailsService implements UserDetailsService {
     private ResponseEntity<?> validateRegisterInfo(UserRequestDto userRequestDto) {
         //check thông tin người dùng có để trống không
         if (isInfo(userRequestDto)) {
-            messenger.setMessenger("Vui lòng nhập đầy đủ thông tin");
+            messenger.setMessenger(ConstantsUser.PLEASE_ENTER_FULL_INFO);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (userRequestDto.getFullName().length() < 6) {
-            messenger.setMessenger("Tên đầy đủ phải ít nhất 6 kí tự");
+            messenger.setMessenger(ConstantsUser.FULL_NAME_AT_LEAST_SIX_CHARACTERS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (userRepository.existsByEmail(userRequestDto.getEmail())) {
-            messenger.setMessenger("Email đã tồn tại");
+            messenger.setMessenger(ConstantsUser.EMAIL_ALREADY_EXISTS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         String regex = "^[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_]+)*@gmail.com$";
         if (!Pattern.matches(regex, userRequestDto.getEmail())) {
-            messenger.setMessenger("Email không hợp lệ ");
+            messenger.setMessenger(ConstantsUser.INVALID_EMAIL);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (userRepository.existsByPhoneNumber(userRequestDto.getPhoneNumber())) {
-            messenger.setMessenger("Số điện thoại đã tồn tại");
+            messenger.setMessenger(ConstantsUser.PHONE_NUMBER_ALREADY_EXISTS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (userRequestDto.getPhoneNumber().length() < 10) {
-            messenger.setMessenger("Số điện thoại phải 10 Số");
+            messenger.setMessenger(ConstantsUser.PHONE_NUMBER_TEN_DIGITS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (!userRequestDto.getUsername().matches("^[a-zA-Z][a-zA-Z0-9]*$")) {
-            messenger.setMessenger("Tên đăng nhập không được bắt đầu bằng ký tự đặc biệt hoặc số");
+            messenger.setMessenger(ConstantsUser.USERNAME_SPECIAL_CHARACTERS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (userRepository.existsByUsername(userRequestDto.getUsername())) {
-            messenger.setMessenger("Tên đăng nhập đã tồn tại");
+            messenger.setMessenger(ConstantsUser.USERNAME_ALREADY_EXISTS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
 
         if (userRequestDto.getUsername().length() < 6
                 || userRequestDto.getPassword().length() < 6) {
-            messenger.setMessenger("Tài khoản hoặc mật khẩu phải ít nhất 6 kí tự");
+            messenger.setMessenger(ConstantsUser.USERNAME_PASSWORD_MIN_SIX_CHARACTERS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         if (!userRequestDto.getPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+]).{6,}$")) {
-            messenger.setMessenger(" Mật khẩu bắt buộc gồm số, chữ cái thường, chữ cái hoa, ký tự đặc biệt");
+            messenger.setMessenger(ConstantsUser.PASSWORD_REQUIREMENTS);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
         return null;
@@ -169,7 +170,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             return new ResponseEntity<>(messenger, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error occurred ");
-            messenger.setMessenger("Đã xãy ra lỗi khi thêm tài khoản.))");
+            messenger.setMessenger(ConstantsUser.ERROR_CREATING_ACCOUNT);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
     }
@@ -178,17 +179,17 @@ public class JwtUserDetailsService implements UserDetailsService {
     private ResponseEntity<?> validateLoginInfo(JwtRequest authenticationRequest) {
         if (CheckEmptys.checkEmpty(authenticationRequest.getUsername())
                 && CheckEmptys.checkEmpty(authenticationRequest.getPassword())) {
-            messenger.setMessenger("Vui lòng nhập tài khoản và mật khẩu");
+            messenger.setMessenger(ConstantsUser.UNAUTHORIZED);
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
         if (CheckEmptys.checkEmpty(authenticationRequest.getUsername())
         ) {
-            messenger.setMessenger("Vui lòng nhập tên đăng nhập");
+            messenger.setMessenger(ConstantsUser.PLEASE_ENTER_USERNAME);
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
         if (CheckEmptys.checkEmpty(authenticationRequest.getPassword())
         ) {
-            messenger.setMessenger("Vui lòng nhập mật khẩu");
+            messenger.setMessenger(ConstantsUser.PLEASE_ENTER_PASSWORD);
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
         return null;
@@ -217,7 +218,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             //tra về token
             return ResponseEntity.ok(new JwtResponse(token, daoUser));
         } catch (Exception e) {
-            messenger.setMessenger("Sai tài khoản hoặc mật khẩu");
+            messenger.setMessenger(ConstantsUser.INVALID_CREDENTIALS);
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
     }

@@ -23,7 +23,7 @@ It makes use of the io.jsonwebtoken.Jwts for achieving this.
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    private static final long JWT_TOKEN_VALIDITY = 60*60 * 60;
+    private static final long JWT_TOKEN_VALIDITY = 60 * 60 * 60;
 
     @Value("${jwt.secret}")
     private String secret;
