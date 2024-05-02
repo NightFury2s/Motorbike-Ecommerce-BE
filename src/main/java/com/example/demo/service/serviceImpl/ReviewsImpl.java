@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.example.demo.Util.Calculate;
 import com.example.demo.constants.ConstantsReview;
 import com.example.demo.model.Dto.CommentDto;
 import com.example.demo.model.Dto.Messenger;
@@ -10,7 +11,6 @@ import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.ReviewsRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.ReviewsService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.demo.Util.Calculate.calculateAverage;
+import static com.example.demo.Util.Calculate.roundToOneDecimal;
 
 @Service
 public class ReviewsImpl implements ReviewsService {
@@ -36,7 +39,7 @@ public class ReviewsImpl implements ReviewsService {
     }
 
     @Override
-    public ResponseEntity<?> add(ReviewsDto reviewsDto) {
+    public ResponseEntity<?> addReview(ReviewsDto reviewsDto) {
 
         try {
             if (reviewsDto.getRating() > 5 || reviewsDto.getRating() < 1) {
@@ -62,7 +65,7 @@ public class ReviewsImpl implements ReviewsService {
     }
 
     @Override
-    public ResponseEntity<?> get(Long productID) {
+    public ResponseEntity<?> getReview(Long productID) {
 
         List<Reviews> reviewsList = reviewsRepository.findByProduct_Id(productID);
         ReviewsReturn reviewsReturn = new ReviewsReturn();
@@ -72,15 +75,15 @@ public class ReviewsImpl implements ReviewsService {
         List<CommentDto> comments = new ArrayList<>();
 
         for (Reviews a : reviewsList) {
-            //lấy list Rating
+            //get list Rating
             Rating.add(a.getRating());
-            //lấy cmt
+            //get cmt
             CommentDto commentDto = new CommentDto();
             commentDto.setName(a.getUser().getUsername());
             commentDto.setComment(a.getComment());
             commentDto.setRating(a.getRating());
             commentDto.setDateReview(a.getDateReview());
-            //add vào list
+            //add  list
             comments.add(commentDto);
         }
 
@@ -89,28 +92,5 @@ public class ReviewsImpl implements ReviewsService {
         reviewsReturn.setQuantityReviews(reviewsList.size());
 
         return new ResponseEntity<>(reviewsReturn, HttpStatus.OK);
-    }
-
-    //tính tb
-    public static float calculateAverage(List<Integer> array) {
-        if (ObjectUtils.isEmpty(array)) {
-            return 0.0f;
-        }
-        int sum = 0;
-        for (int num : array) {
-            sum += num;
-        }
-        return (float) sum / array.size();
-    }
-
-    //làm tròn và lấy sau thập phân 1 số
-    public static float roundToOneDecimal(float value) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        return Float.parseFloat(df.format(value));
-    }
-
-    @Override
-    public ResponseEntity<?> delete(long id) {
-        return null;
     }
 }

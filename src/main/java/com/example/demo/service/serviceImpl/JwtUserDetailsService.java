@@ -39,22 +39,36 @@ public class JwtUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    @Autowired
     private PasswordEncoder bcryptEncoder;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
     private JwtUserDetailsService userDetailsService;
 
+    @Autowired
     public JwtUserDetailsService(Messenger messenger, UserRepository userRepository, RoleRepository roleRepository) {
         this.messenger = messenger;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setBcryptEncoder(PasswordEncoder bcryptEncoder) {
+        this.bcryptEncoder = bcryptEncoder;
+    }
+
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @Autowired
+    public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @Autowired
+    public void setUserDetailsService(JwtUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Override

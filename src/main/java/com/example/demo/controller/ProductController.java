@@ -19,7 +19,7 @@ public class ProductController {
 
     @PostMapping("/admin/product/add")
     public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
-        return productService.add(productDto);
+        return productService.addProduct(productDto);
     }
 
     // get by idType
@@ -27,7 +27,6 @@ public class ProductController {
     public ResponseEntity<?> getSomeProduct(@PathVariable int page, @PathVariable int size, @PathVariable Long idType) {
         return productService.getByIdType(page, size, idType);
     }
-
 
     @GetMapping("/product/get-type-detail/{page}/{size}/{detailType}")
     public ResponseEntity<?> getTypeDetail(@PathVariable int page, @PathVariable int size, @PathVariable Long detailType) {
@@ -58,8 +57,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/admin/product/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        return productService.delete(id);
+    public ResponseEntity<?> deleteProduct(@PathVariable long id) {
+        return productService.deleteProduct(id);
     }
 
     @DeleteMapping("/admin/product/delete-multiple-products")
@@ -69,6 +68,6 @@ public class ProductController {
 
     @PutMapping("/admin/product/put/{id}")
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody ProductDto productDto) {
-        return productService.put(id, productDto);
+        return productService.putProduct(id, productDto);
     }
 }

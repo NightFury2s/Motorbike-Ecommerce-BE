@@ -41,7 +41,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> add(ProductDto dto) {
+    public ResponseEntity<?> addProduct(ProductDto dto) {
 
         try {
             Product product = new Product();
@@ -226,7 +226,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> delete(long id) {
+    public ResponseEntity<?> deleteProduct(long id) {
         try {
             if (productRepository.existsById(id)) {
                 productRepository.deleteById(id);
@@ -272,7 +272,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> put(long id, ProductDto productDto) {
+    public ResponseEntity<?> putProduct(long id, ProductDto productDto) {
         try {
             Product product = productRepository.findById(id).orElse(null);
             if (ObjectUtils.isEmpty(product)) {
@@ -285,12 +285,7 @@ public class ProductImpl implements ProductService {
             product.setPrice(productDto.getPrice());
             product.setQuantity(productDto.getQuantity());
             product.setDetailType(productDto.getDetailType());
-
-            List<Img> img = productDto.getImages();
-
-            //img.add()
-            product.setImages(img);
-
+            product.setImages(productDto.getImages());
             product.setDiscount(productDto.getDiscount());
             product.setDescribe(productDto.getDescribe());
             product.setTypeProduct(typeProductRepository.findById(productDto.getIdTypeProduct()).orElse(null));
@@ -304,6 +299,7 @@ public class ProductImpl implements ProductService {
             log.info("Updated product successfully: {}", product.getName());
             messenger.setMessenger(ConstantsProduct.PUT_PRODUCT_SUCCESS);
             return new ResponseEntity<>(product, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Error while updating product: {}", e.getMessage());
             messenger.setMessenger(ConstantsProduct.ERROR);
