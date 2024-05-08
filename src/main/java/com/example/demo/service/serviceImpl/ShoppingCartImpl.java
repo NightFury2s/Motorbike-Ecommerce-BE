@@ -42,12 +42,21 @@ public class ShoppingCartImpl implements ShoppingCartService {
         this.shoppingCartDetailRepository = shoppingCartDetailRepository;
     }
 
+    boolean checkUserAndStatus(int status){
+       return shoppingCartRepository.existsByUser_UsernameAndStatus(getUsername(), status);
+    }
+    Product getProduct(Long id){
+        return productRepository.findById(id).orElse(null);
+    }
+    ShoppingCart getShoppingCart(int status){
+        return shoppingCartRepository.findByUsernameAndStatus(getUsername(), status);
+    }
     @Override
     public ResponseEntity<?> paymentCart() {
         String username = getUsername();
 
-        if (shoppingCartRepository.existsByUser_UsernameAndStatus(username, 0)) {
-            ShoppingCart shoppingCartNew = shoppingCartRepository.findByUsernameAndStatus(username, 0);
+        if ( checkUserAndStatus(0)) {
+            ShoppingCart shoppingCartNew = getShoppingCart(0);
 
             List<StringBuilder> mess = new ArrayList<>();
             for (ShoppingCartDetail cartDetail : shoppingCartNew.getShoppingCartDetails()) {
@@ -69,7 +78,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
             //Trừ số lượng ở kho
             for (ShoppingCartDetail a : shoppingCartNew.getShoppingCartDetails()) {
-                Product product = productRepository.findById(a.getProduct().getId()).orElse(null);
+                Product product = getProduct(a.getProduct().getId());
                 assert product != null;
                 product.setQuantity(product.getQuantity() - a.getQuantityCart());
 
@@ -131,7 +140,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
 
-            Product product = productRepository.findById(shoppingCartDto.getIdProduct()).orElse(null);
+            Product product = getProduct(shoppingCartDto.getIdProduct());
             if (product == null) {
                 messenger.setMessenger(ConstantsShoppingCart.PRODUCT_NOT_FOUND);
                 return new ResponseEntity<>(messenger, HttpStatus.NOT_FOUND);
@@ -208,14 +217,26 @@ public class ShoppingCartImpl implements ShoppingCartService {
     }
 
     @Override
-    public ResponseEntity<?> getCartByUser() {
+    public ResponseEntity<?> getCartByUser(int status) {
         String username = getUsername();
 
         try {
-            if (shoppingCartRepository.existsByUser_UsernameAndStatus(username, 0)) {
-                ShoppingCart shoppingCarts = shoppingCartRepository.findByUsernameAndStatus(username, 0);
-                ShoppingCartDtoReturn shoppingCartDtoReturns = new ShoppingCartDtoReturn(shoppingCarts);
-                return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
+            if(status==0) {
+                if (checkUserAndStatus(status)) {
+                    ShoppingCart shoppingCarts =getShoppingCart(status);
+                    ShoppingCartDtoReturn shoppingCartDtoReturns = new ShoppingCartDtoReturn(shoppingCarts);
+                    return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
+                }
+            }
+            else {
+                if (checkUserAndStatus(status)) {
+                    List<ShoppingCart> shoppingCarts = shoppingCartRepository.findListByUsernameAndStatus(username, status);
+                    ShoppingCartDtoReturn shoppingCartDtoReturns = null;
+                    for (ShoppingCart a:shoppingCarts){
+                         shoppingCartDtoReturns = new ShoppingCartDtoReturn(a);
+                    }
+                    return new ResponseEntity<>(shoppingCartDtoReturns, HttpStatus.OK);
+                }
             }
             messenger.setMessenger(ConstantsShoppingCart.CART_EMPTY);
             return new ResponseEntity<>(messenger, HttpStatus.OK);
@@ -225,5 +246,8 @@ public class ShoppingCartImpl implements ShoppingCartService {
         }
 
     }
+
+
+
 
 }

@@ -2,10 +2,9 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.constants.ConstantsProduct;
 import com.example.demo.model.Dto.*;
-import com.example.demo.model.entity.Img;
 import com.example.demo.model.entity.Product;
 import com.example.demo.repositories.ProductRepository;
-import com.example.demo.repositories.TypeProducRepository;
+import com.example.demo.repositories.TypeProductRepository;
 import com.example.demo.service.ProductService;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -32,16 +31,16 @@ public class ProductImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final TypeProducRepository typeProductRepository;
+    private final TypeProductRepository typeProductRepository;
 
-    public ProductImpl(Messenger messenger, ProductRepository productRepository, TypeProducRepository typeProductRepository) {
+    public ProductImpl(Messenger messenger, ProductRepository productRepository, TypeProductRepository typeProductRepository) {
         this.messenger = messenger;
         this.productRepository = productRepository;
         this.typeProductRepository = typeProductRepository;
     }
 
     @Override
-    public ResponseEntity<?> add(ProductDto dto) {
+    public ResponseEntity<?> addProduct(ProductDto dto) {
 
         try {
             Product product = new Product();
@@ -226,7 +225,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> delete(long id) {
+    public ResponseEntity<?> deleteProduct(long id) {
         try {
             if (productRepository.existsById(id)) {
                 productRepository.deleteById(id);
@@ -272,7 +271,7 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> put(long id, ProductDto productDto) {
+    public ResponseEntity<?> putProduct(long id, ProductDto productDto) {
         try {
             Product product = productRepository.findById(id).orElse(null);
             if (ObjectUtils.isEmpty(product)) {
@@ -285,12 +284,7 @@ public class ProductImpl implements ProductService {
             product.setPrice(productDto.getPrice());
             product.setQuantity(productDto.getQuantity());
             product.setDetailType(productDto.getDetailType());
-
-            List<Img> img = productDto.getImages();
-
-            //img.add()
-            product.setImages(img);
-
+            product.setImages(productDto.getImages());
             product.setDiscount(productDto.getDiscount());
             product.setDescribe(productDto.getDescribe());
             product.setTypeProduct(typeProductRepository.findById(productDto.getIdTypeProduct()).orElse(null));
@@ -303,7 +297,8 @@ public class ProductImpl implements ProductService {
             productRepository.save(product);
             log.info("Updated product successfully: {}", product.getName());
             messenger.setMessenger(ConstantsProduct.PUT_PRODUCT_SUCCESS);
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Error while updating product: {}", e.getMessage());
             messenger.setMessenger(ConstantsProduct.ERROR);

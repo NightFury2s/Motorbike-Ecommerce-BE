@@ -14,6 +14,7 @@ public interface ShoppingCartService {
 
     ResponseEntity<?> deleteByIdShoppingCartDetail(Long id);
 
-    ResponseEntity<?> getCartByUser();
+    ResponseEntity<?> getCartByUser(int status);
+
 
 }

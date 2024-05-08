@@ -39,22 +39,36 @@ public class JwtUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    @Autowired
     private PasswordEncoder bcryptEncoder;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
     private JwtUserDetailsService userDetailsService;
 
+    @Autowired
     public JwtUserDetailsService(Messenger messenger, UserRepository userRepository, RoleRepository roleRepository) {
         this.messenger = messenger;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setBcryptEncoder(PasswordEncoder bcryptEncoder) {
+        this.bcryptEncoder = bcryptEncoder;
+    }
+
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @Autowired
+    public void setJwtTokenUtil(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @Autowired
+    public void setUserDetailsService(JwtUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -93,7 +107,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     //kiểm tra điều kiện
-    private ResponseEntity<?> validateRegisterInfo(UserRequestDto userRequestDto) {
+    private ResponseEntity<?>  validateRegisterInfo(UserRequestDto userRequestDto) {
         //check thông tin người dùng có để trống không
         if (isInfo(userRequestDto)) {
             messenger.setMessenger(ConstantsUser.PLEASE_ENTER_FULL_INFO);
@@ -141,13 +155,12 @@ public class JwtUserDetailsService implements UserDetailsService {
         return null;
     }
 
-    //dang ki
-    public ResponseEntity<?> save(UserRequestDto userRequestDto) {
+    public ResponseEntity<?> register(UserRequestDto userRequestDto) {
 
         try {
             // check thông tin trước khi đăng kí tk
             ResponseEntity<?> validationResponse = validateRegisterInfo(userRequestDto);
-            if (ObjectUtils.isEmpty(validationResponse )) {
+            if (validationResponse != null) {
                 return validationResponse;
             }
             //tạo 1 User để luu vào csdl

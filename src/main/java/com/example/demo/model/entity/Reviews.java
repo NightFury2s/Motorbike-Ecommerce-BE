@@ -22,6 +22,7 @@ public class Reviews {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_Product", nullable = false)
     private Product product;
+
     @ManyToOne
     @JoinColumn(name = "id_User", nullable = false)
     private DAOUser user;

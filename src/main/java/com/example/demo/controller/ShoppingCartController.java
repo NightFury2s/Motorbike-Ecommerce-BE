@@ -3,8 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.model.Dto.ShoppingCartDto;
 import com.example.demo.service.ShoppingCartService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+@PreAuthorize("hasRole('ROLE_USER')")
 @RequestMapping("user/shopping-cart")
 @RestController
 public class ShoppingCartController {
@@ -13,6 +15,7 @@ public class ShoppingCartController {
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
     }
+
 
     @PostMapping("/add-to-cart")
     public ResponseEntity<?> addTypeProduct(@RequestBody ShoppingCartDto shoppingCartDto) {
@@ -36,7 +39,12 @@ public class ShoppingCartController {
 
     @PostMapping("/get-cart-by-user")
     public ResponseEntity<?> getCartByUser() {
-        return shoppingCartService.getCartByUser();
+        return shoppingCartService.getCartByUser(0);
+    }
+
+    @PostMapping("/get-cart-by-user-paid")
+    public ResponseEntity<?> getCartByUserPaid() {
+        return shoppingCartService.getCartByUser(1);
     }
 
     @DeleteMapping("/delete")

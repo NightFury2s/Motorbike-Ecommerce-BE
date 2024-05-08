@@ -11,7 +11,6 @@ public class ReviewsDto {
 
     private Long id;
     private Long id_product;
-    private Long id_user;
     private int rating;
     private String comment;
 }
