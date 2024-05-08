@@ -107,7 +107,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     //kiểm tra điều kiện
-    private ResponseEntity<?> validateRegisterInfo(UserRequestDto userRequestDto) {
+    private ResponseEntity<?>  validateRegisterInfo(UserRequestDto userRequestDto) {
         //check thông tin người dùng có để trống không
         if (isInfo(userRequestDto)) {
             messenger.setMessenger(ConstantsUser.PLEASE_ENTER_FULL_INFO);
@@ -155,13 +155,12 @@ public class JwtUserDetailsService implements UserDetailsService {
         return null;
     }
 
-    //dang ki
-    public ResponseEntity<?> save(UserRequestDto userRequestDto) {
+    public ResponseEntity<?> register(UserRequestDto userRequestDto) {
 
         try {
             // check thông tin trước khi đăng kí tk
             ResponseEntity<?> validationResponse = validateRegisterInfo(userRequestDto);
-            if (ObjectUtils.isEmpty(validationResponse )) {
+            if (validationResponse != null) {
                 return validationResponse;
             }
             //tạo 1 User để luu vào csdl

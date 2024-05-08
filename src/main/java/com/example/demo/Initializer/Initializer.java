@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 public class Initializer implements ApplicationRunner {
     private final RoleRepository roleRepository;
     private final PasswordEncoder bcryptEncoder;
-    private final TypeProducRepository typeProductRepository;
+    private final TypeProductRepository typeProductRepository;
     private final UserRepository userRepository;
 
-    public Initializer(RoleRepository roleRepository, PasswordEncoder bcryptEncoder, TypeProducRepository typeProductRepository, UserRepository userRepository) {
+    public Initializer(RoleRepository roleRepository, PasswordEncoder bcryptEncoder, TypeProductRepository typeProductRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
         this.bcryptEncoder = bcryptEncoder;
         this.typeProductRepository = typeProductRepository;
@@ -35,9 +35,9 @@ public class Initializer implements ApplicationRunner {
             addUserAdmin("admin1", "admin1", "kcosten1011231232131@gmail.com");
             System.out.println("đã thêm tk admin");
         }
-        if (typeProductRepository.existsByNameType("xe may") && typeProductRepository.existsByNameType("Phụ tùng")) {
-            addType("xe may");
-            addType("Phụ tùng ");
+        if (typeProductRepository.existsByNameType("Xe máy") && typeProductRepository.existsByNameType("Phụ tùng")) {
+            addType("Xe máy");
+            addType("Phụ tùng");
             System.out.println("Đã thêm type product ");
         }
     }

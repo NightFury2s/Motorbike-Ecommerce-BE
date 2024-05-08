@@ -4,6 +4,7 @@ import com.example.demo.model.Dto.ProductDto;
 
 import com.example.demo.service.ProductService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin/product/add")
     public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
         return productService.addProduct(productDto);
@@ -56,16 +57,19 @@ public class ProductController {
         return productService.findByNameProduct(page, size, nameProduct);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/product/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable long id) {
         return productService.deleteProduct(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/product/delete-multiple-products")
     public ResponseEntity<?> deleteMultipleProducts(@RequestBody List<Long> ids) {
         return productService.deleteMultipleProducts(ids);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/product/put/{id}")
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody ProductDto productDto) {
         return productService.putProduct(id, productDto);

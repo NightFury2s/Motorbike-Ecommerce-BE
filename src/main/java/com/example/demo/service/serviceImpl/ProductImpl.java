@@ -2,10 +2,9 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.constants.ConstantsProduct;
 import com.example.demo.model.Dto.*;
-import com.example.demo.model.entity.Img;
 import com.example.demo.model.entity.Product;
 import com.example.demo.repositories.ProductRepository;
-import com.example.demo.repositories.TypeProducRepository;
+import com.example.demo.repositories.TypeProductRepository;
 import com.example.demo.service.ProductService;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -32,9 +31,9 @@ public class ProductImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final TypeProducRepository typeProductRepository;
+    private final TypeProductRepository typeProductRepository;
 
-    public ProductImpl(Messenger messenger, ProductRepository productRepository, TypeProducRepository typeProductRepository) {
+    public ProductImpl(Messenger messenger, ProductRepository productRepository, TypeProductRepository typeProductRepository) {
         this.messenger = messenger;
         this.productRepository = productRepository;
         this.typeProductRepository = typeProductRepository;
@@ -298,7 +297,7 @@ public class ProductImpl implements ProductService {
             productRepository.save(product);
             log.info("Updated product successfully: {}", product.getName());
             messenger.setMessenger(ConstantsProduct.PUT_PRODUCT_SUCCESS);
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("Error while updating product: {}", e.getMessage());

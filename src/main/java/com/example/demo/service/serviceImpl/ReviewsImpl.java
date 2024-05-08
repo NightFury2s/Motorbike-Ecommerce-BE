@@ -1,6 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.Util.Calculate;
+import com.example.demo.Util.GetInfoUser;
 import com.example.demo.constants.ConstantsReview;
 import com.example.demo.model.Dto.CommentDto;
 import com.example.demo.model.Dto.Messenger;
@@ -51,12 +52,12 @@ public class ReviewsImpl implements ReviewsService {
             reviews.setRating(reviewsDto.getRating());
             reviews.setDateReview(new Date());
             reviews.setComment(reviewsDto.getComment());
-            reviews.setUser(userRepository.findById(reviewsDto.getId_user()).orElse(null));
+            reviews.setUser(userRepository.findByUsername(GetInfoUser.getUsername()));
             reviews.setProduct(productRepository.findById(reviewsDto.getId_product()).orElse(null));
 
             reviewsRepository.save(reviews);
             messenger.setMessenger(ConstantsReview.ADD_SUCCESS);
-            return new ResponseEntity<>(reviews, HttpStatus.OK);
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
         } catch (Exception e) {
             messenger.setMessenger(ConstantsReview.ADD_ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);

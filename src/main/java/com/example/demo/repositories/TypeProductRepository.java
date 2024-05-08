@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TypeProducRepository extends JpaRepository<TypeProduct, Long> {
+public interface TypeProductRepository extends JpaRepository<TypeProduct, Long> {
 
     @Query("select (count(t) > 0) from TypeProduct t where t.nameType = ?1")
     boolean existsByNameType(String nameType);
