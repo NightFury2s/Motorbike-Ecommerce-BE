@@ -41,7 +41,6 @@ public class ProductImpl implements ProductService {
 
     @Override
     public ResponseEntity<?> addProduct(ProductDto dto) {
-
         try {
             Product product = new Product();
             product.setName(dto.getName());
@@ -58,7 +57,6 @@ public class ProductImpl implements ProductService {
                 messenger.setMessenger(ConstantsProduct.TYPE_NULL);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
-
             productRepository.save(product);
             log.info("Added new product: {}", product.getName());
             messenger.setMessenger(ConstantsProduct.ADD_PRODUCT_SUCCESS);
@@ -68,7 +66,6 @@ public class ProductImpl implements ProductService {
             messenger.setMessenger(ConstantsProduct.ERROR);
             return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @Override

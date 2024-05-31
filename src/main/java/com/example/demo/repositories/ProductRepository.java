@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.typeProduct.id = ?1 ORDER BY p.price ASC")
     Page<Product> findByTypeProduct_IdOrderByPriceAsc(Long id, Pageable pageable);
 
-    @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE %?1%")
+    @Query("SELECT p FROM Product p WHERE lower(p.name) LIKE lower(concat('%', ?1, '%'))")
     Page<Product> findByName(String name, Pageable pageable);
 
     @Query("select p from Product p where p.typeProduct.id = ?1or p.typeProduct.id = ?2")

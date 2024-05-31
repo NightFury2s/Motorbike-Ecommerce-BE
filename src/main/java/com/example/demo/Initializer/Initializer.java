@@ -31,8 +31,8 @@ public class Initializer implements ApplicationRunner {
             AddRole("USER");
             System.out.println("Đã thêm role ");
         }
-        if (!userRepository.existsByUsername("admin1")) {
-            addUserAdmin("admin1", "admin1", "kcosten1011231232131@gmail.com");
+        if (!userRepository.existsByUsername("admin")) {
+            addUserAdmin("admin", "Nguyễn Quốc Đạt","admin", "kcosten101@gmail.com","0767372754");
             System.out.println("đã thêm tk admin");
         }
         if (typeProductRepository.existsByNameType("Xe máy") && typeProductRepository.existsByNameType("Phụ tùng")) {
@@ -54,11 +54,14 @@ public class Initializer implements ApplicationRunner {
         typeProductRepository.save(typeProduct);
     }
 
-    void addUserAdmin(String username, String password, String email) {
+    void addUserAdmin(String username,String fullName, String password, String email,String phoneNumber) {
         DAOUser user = new DAOUser();
         user.setUsername(username);
+        user.setFullName(fullName);
         user.setPassword(bcryptEncoder.encode(password));
         user.setEmail(email);
+        user.setStatus(0);
+        user.setPhoneNumber(phoneNumber);
         Role role = new Role();
         role.setId(1L);
         user.setRole(role);

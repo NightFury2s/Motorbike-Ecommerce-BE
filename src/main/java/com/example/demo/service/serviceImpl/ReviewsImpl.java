@@ -1,6 +1,5 @@
 package com.example.demo.service.serviceImpl;
 
-import com.example.demo.Util.Calculate;
 import com.example.demo.Util.GetInfoUser;
 import com.example.demo.constants.ConstantsReview;
 import com.example.demo.model.Dto.CommentDto;
@@ -8,15 +7,15 @@ import com.example.demo.model.Dto.Messenger;
 import com.example.demo.model.Dto.ReviewsDto;
 import com.example.demo.model.Dto.ReviewsReturn;
 import com.example.demo.model.entity.Reviews;
-import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.ReviewsRepository;
+import com.example.demo.repositories.ShoppingCartDetailRepository;
+import com.example.demo.repositories.ShoppingCartRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.ReviewsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,13 +28,13 @@ public class ReviewsImpl implements ReviewsService {
 
     private final ReviewsRepository reviewsRepository;
     private final UserRepository userRepository;
-    private final ProductRepository productRepository;
+    private final ShoppingCartDetailRepository shoppingCartDetailRepository;
     private final Messenger messenger;
 
-    public ReviewsImpl(ReviewsRepository reviewsRepository, UserRepository userRepository, ProductRepository productRepository, Messenger messenger) {
+    public ReviewsImpl(ReviewsRepository reviewsRepository, UserRepository userRepository, ShoppingCartDetailRepository shoppingCartDetailRepository, Messenger messenger) {
         this.reviewsRepository = reviewsRepository;
         this.userRepository = userRepository;
-        this.productRepository = productRepository;
+        this.shoppingCartDetailRepository = shoppingCartDetailRepository;
         this.messenger = messenger;
     }
 
@@ -47,13 +46,22 @@ public class ReviewsImpl implements ReviewsService {
                 messenger.setMessenger(ConstantsReview.RATING_RANGE);
                 return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
             }
+            if(reviewsRepository.existsByStatusAndShoppingCartDetail_Id(1,reviewsDto.getIdCartDetail() )){
+                messenger.setMessenger("Đơn hàng đã đánh giá rồi");
+                return new ResponseEntity<>(messenger, HttpStatus.OK);
+            }
+            if(!shoppingCartDetailRepository.existsById(reviewsDto.getIdCartDetail())){
+                messenger.setMessenger("Bạn chưa mua hàng");
+                return new ResponseEntity<>(messenger, HttpStatus.BAD_REQUEST);
+            }
             Reviews reviews = new Reviews();
 
             reviews.setRating(reviewsDto.getRating());
             reviews.setDateReview(new Date());
             reviews.setComment(reviewsDto.getComment());
             reviews.setUser(userRepository.findByUsername(GetInfoUser.getUsername()));
-            reviews.setProduct(productRepository.findById(reviewsDto.getId_product()).orElse(null));
+            reviews.setStatus(1);
+            reviews.setShoppingCartDetail (shoppingCartDetailRepository.findById (reviewsDto.getIdCartDetail()).orElse(null));
 
             reviewsRepository.save(reviews);
             messenger.setMessenger(ConstantsReview.ADD_SUCCESS);
@@ -68,7 +76,7 @@ public class ReviewsImpl implements ReviewsService {
     @Override
     public ResponseEntity<?> getReview(Long productID) {
 
-        List<Reviews> reviewsList = reviewsRepository.findByProduct_Id(productID);
+        List<Reviews> reviewsList = reviewsRepository.findByShoppingCartDetail_Product_Id(productID);
         ReviewsReturn reviewsReturn = new ReviewsReturn();
 
         List<Integer> Rating = new ArrayList<>();

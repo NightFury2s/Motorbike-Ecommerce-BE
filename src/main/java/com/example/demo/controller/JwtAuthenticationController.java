@@ -7,16 +7,17 @@ import com.example.demo.service.CustomerService;
 import com.example.demo.service.serviceImpl.JwtUserDetailsService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class JwtAuthenticationController {
     private final JwtUserDetailsService userDetailsService;
-    private final CustomerService customerService;
+
 
     public JwtAuthenticationController(JwtUserDetailsService userDetailsService, CustomerService customerService) {
         this.userDetailsService = userDetailsService;
-        this.customerService = customerService;
+
     }
 
     @PostMapping("/register")
@@ -29,20 +30,10 @@ public class JwtAuthenticationController {
         return userDetailsService.login(authenticationRequest);
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestParam("oldPassword") String oldPassword,
-                                            @RequestParam("newPassword") String newPassword,
-                                            @RequestParam("enterPassword") String enterPassword) {
-        return customerService.changePassword(oldPassword, newPassword, enterPassword);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete-by-user/{id}")
+    public ResponseEntity<?> deleteByUser(@PathVariable Long id) {
+        return userDetailsService.deleteUser(id);
     }
 
-    @PostMapping("/change-customer-information")
-    public ResponseEntity<?> changeCustomerInformation(@RequestBody UserRequestDto userRequestDto) {
-        return customerService.changeCustomerInformation(userRequestDto);
-    }
-
-    @GetMapping("/get-information-user")
-    public ResponseEntity<?> getInformation() {
-        return customerService.getInformation();
-    }
 }
