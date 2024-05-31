@@ -159,10 +159,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         try {
             // check thông tin trước khi đăng kí tk
-            ResponseEntity<?> validationResponse = validateRegisterInfo(userRequestDto);
-            if (validationResponse != null) {
-                return validationResponse;
-            }
+//            ResponseEntity<?> validationResponse = validateRegisterInfo(userRequestDto);
+//            if (validationResponse != null) {
+//                return validationResponse;
+//            }
             //tạo 1 User để luu vào csdl
             DAOUser daoUser = new DAOUser();
             // gán thông tin cho user lấy từ dto
@@ -170,6 +170,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             daoUser.setPassword(bcryptEncoder.encode(userRequestDto.getPassword()));
             daoUser.setAddress(userRequestDto.getAddress());
             daoUser.setEmail(userRequestDto.getEmail());
+            daoUser.setStatus(0);//tài khoản k bị khóa; 1 tài bị khóa
             daoUser.setFullName(userRequestDto.getFullName());
             daoUser.setPhoneNumber(userRequestDto.getPhoneNumber());
 
@@ -190,6 +191,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     // hàm check tk mk
     private ResponseEntity<?> validateLoginInfo(JwtRequest authenticationRequest) {
+
         if (CheckEmptys.checkEmpty(authenticationRequest.getUsername())
                 && CheckEmptys.checkEmpty(authenticationRequest.getPassword())) {
             messenger.setMessenger(ConstantsUser.UNAUTHORIZED);
@@ -205,6 +207,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             messenger.setMessenger(ConstantsUser.PLEASE_ENTER_PASSWORD);
             return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
         }
+
         return null;
     }
 
@@ -216,9 +219,14 @@ public class JwtUserDetailsService implements UserDetailsService {
             if (validationResponse != null) {
                 return validationResponse;
             }
+
             //xác thực thông tin đăng nhập
             authenticate(authenticationRequest.getUsername().trim(), authenticationRequest.getPassword());
-
+            //check tk co bi khoa kho
+            if(userDetailsService.userRepository.existsByUsernameAndStatus(authenticationRequest.getUsername(),1)){
+                messenger.setMessenger("Tài khoản của bạn đã bị khóa, Vui lòng liên hệ admin");
+                return new ResponseEntity<>(messenger, HttpStatus.UNAUTHORIZED);
+            }
             //tạo 1 userDetails
             final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
             // tạo token
@@ -247,5 +255,17 @@ public class JwtUserDetailsService implements UserDetailsService {
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
+    }
+
+    public ResponseEntity<?> deleteUser( Long idUser)  {
+
+        if(userRepository.existsById(idUser)){
+            userRepository.deleteById(idUser);
+
+            messenger.setMessenger("Xóa thành công id: "+idUser);
+            return new ResponseEntity<>(messenger, HttpStatus.OK);
+        }
+        messenger.setMessenger("Người dùng không tồn tại");
+        return new ResponseEntity<>(messenger, HttpStatus.CREATED);
     }
 }

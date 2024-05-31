@@ -6,6 +6,7 @@ import com.example.demo.constants.ConstantsOtp;
 import com.example.demo.constants.ConstantsUser;
 import com.example.demo.model.Dto.Messenger;
 import com.example.demo.model.Dto.UserDTO;
+import com.example.demo.model.Dto.UserPage;
 import com.example.demo.model.Dto.UserRequestDto;
 import com.example.demo.model.entity.DAOUser;
 import com.example.demo.repositories.UserRepository;
@@ -13,12 +14,15 @@ import com.example.demo.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.tomcat.jni.User;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -121,6 +125,45 @@ public class CustomerImpl implements CustomerService {
 
         messenger.setMessenger("Sửa thông tin thành công");
         return new ResponseEntity<>(messenger, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getAllUser(int page, int size, Long id) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        UserPage userPage = new UserPage( userRepository.findByRole_Id(id,pageable));
+        return  new ResponseEntity<>(userPage, HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<?> lockAccount(Long id) {
+
+        if(!userRepository.existsById(id)){
+            messenger.setMessenger("Tài khoản không tồn tại ");
+            return  new ResponseEntity<>(messenger, HttpStatus.OK);
+        }
+        DAOUser user= userRepository.findById(id).orElse(null);
+
+        String  notLock="admin";
+        if(user.getUsername().equals(notLock)){
+            messenger.setMessenger("Không thể khóa tài khoản "+notLock);
+            return  new ResponseEntity<>(messenger, HttpStatus.OK);
+        }
+
+        if(user.getStatus()==1){
+            user.setStatus(0);
+            messenger.setMessenger("Đã mở khóa tài khoản : "+user.getUsername());
+        }
+        else {
+            user.setStatus(1);
+            messenger.setMessenger("Đã khóa tài khoản : "+user.getUsername());
+        }
+
+        userRepository.save(user);
+
+        return  new ResponseEntity<>(messenger, HttpStatus.OK);
+
     }
 
     private DAOUser getUserByToken() {

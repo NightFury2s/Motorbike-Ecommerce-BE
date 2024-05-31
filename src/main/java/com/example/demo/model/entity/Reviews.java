@@ -18,10 +18,10 @@ public class Reviews {
     private int rating;
     private String comment;
     private Date dateReview;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_Product", nullable = false)
-    private Product product;
+    private int status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn( referencedColumnName = "id")
+    private ShoppingCartDetail shoppingCartDetail;
 
     @ManyToOne
     @JoinColumn(name = "id_User", nullable = false)

@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ReviewsDto {
 
     private Long id;
-    private Long id_product;
+    private Long idCartDetail;
     private int rating;
     private String comment;
 }
